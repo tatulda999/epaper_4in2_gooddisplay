@@ -10,7 +10,7 @@
         "main.ts",
         "README.md",
         "display.cpp",
-        "font.cpp"        
+        "font.cpp"
     ],
     "testFiles": [
         "test.ts"

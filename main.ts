@@ -469,6 +469,14 @@ namespace ePaper {
         _init()
     }
 
+    export function fast_init() {
+        _fast_init()
+    }
+
+    export function sleep() {
+        _sleep()
+    }
+
     //% shim=ePaper::show
     function _show(): void {
         return
@@ -486,6 +494,16 @@ namespace ePaper {
 
     //% shim=ePaper::init
     function _init(): void {
+        return
+    }
+
+    //% shim=ePaper::fast_init
+    function _fast_init(): void {
+        return
+    }
+
+    //% shim=ePaper::sleep
+    function _sleep(): void {
         return
     }
 

@@ -74,7 +74,7 @@ bool initialized = false;
 namespace ePaper {
     void busyWait() {
         while(BUSY.getDigitalValue()) {
-            uBit.sleep(50);
+            uBit.sleep(10);
         }
     }
 
@@ -185,13 +185,13 @@ namespace ePaper {
         if(initialized) return;
 
         RESET.setDigitalValue(0);
-        uBit.sleep(100);
+        uBit.sleep(10);
         RESET.setDigitalValue(1);
-        uBit.sleep(100);
+        uBit.sleep(10);
 
         busyWait();
         spiCommand(0x12);
-        uBit.sleep(500);
+        uBit.sleep(5);
         busyWait();
 
         spiCommand(0x21, {0x40, 0x00});
@@ -207,6 +207,38 @@ namespace ePaper {
         clear();
 
         initialized = true;
+    }
+    
+
+    //%
+    void fast_init() {
+        RESET.setDigitalValue(0);
+        uBit.sleep(10);
+        RESET.setDigitalValue(1);
+        uBit.sleep(10);
+
+        busyWait();
+        spiCommand(0x12);
+        uBit.sleep(5);
+        busyWait();
+
+        spiCommand(0x21, {0x40, 0x00});
+        spiCommand(0x3C, {0x05});
+        spiCommand(0x1A, {0x6E});
+        spiCommand(0x22, {0x91, 0x20});
+        busyWait();
+
+        spiCommand(0x11, {0x01});
+        spiCommand(0x44, {0x00, 0x31});
+        spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});
+        spiCommand(0x4E, {0x00});
+        spiCommand(0x4F, {0x2B, 0x01});
+    }
+    
+    //%
+    void sleep() {
+        spiCommand(0x10,{0x01});
+        uBit.sleep(100);
     }
 
     //%

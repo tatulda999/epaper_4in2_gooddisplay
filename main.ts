@@ -469,11 +469,15 @@ namespace ePaper {
         _init()
     }
 
+    //% blockId= ePaperFastInit
+    //% block="fast init"    
     export function fast_init() {
         _fast_init()
     }
 
-    export function sleep() {
+    //% blockId= ePaperSleep
+    //% block="sleep"
+        export function sleep() {
         _sleep()
     }
 

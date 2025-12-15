@@ -142,7 +142,7 @@ namespace ePaper {
     void setPixel(int x, int y, int color) {
         if(x >= WIDTH) return;
         if(y >= HEIGHT) return;
-        x = ROWS - 1 - x;
+        //x = ROWS - 1 - x;
         y += OFFSET_Y;
         y = COLS - 1 - y;
         uint8_t shift = 7 - (y % 8);

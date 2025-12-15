@@ -541,13 +541,13 @@ namespace ePaper {
     }
 }
 
-pins.spiFrequency(4000000);
-ePaper.init()
 pins.spiFrequency(4000000)
+ePaper.init()
+
 /*
 pins.digitalWritePin(12,0) // DC
 pins.digitalWritePin(8,0)  // CS
 pins.digitalWritePin(2,0) // RESET
 pins.digitalReadPin(16) // BUSY
 */
-ePaper.init()
+

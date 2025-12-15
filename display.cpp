@@ -61,7 +61,7 @@ constexpr uint8_t HEIGHT = 75;
 constexpr uint8_t COLS = 400;
 constexpr uint8_t ROWS = 75;
 constexpr uint8_t OFFSET_X = 0;
-constexpr uint8_t OFFSET_Y = 0;
+constexpr uint8_t OFFSET_Y = 6;
 
 //uint8_t *buf_b;
 //uint8_t *buf_r;
@@ -142,7 +142,7 @@ namespace ePaper {
     }
 
     //%
-    void setPixel(int x, int y, int color) {
+    void setPixel(int y, int x, int color) {
         if(x >= WIDTH) return;
         if(y >= HEIGHT) return;
         x = ROWS - 1 - x;

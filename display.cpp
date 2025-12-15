@@ -269,6 +269,14 @@ namespace ePaper {
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
         clear(0xFF);
+        spiCommand(WRITE_RAM);
+        for(int i=0; i<15000; i++) {
+                spiData(0xFF);
+        }
+        spiCommand(WRITE_ALTRAM);
+        for(int i=0; i<15000; i++) {
+                spiData(0xFF);
+        }
         /*
         spiCommand(WRITE_RAM);
         for(int y=0; y<ROWS; y++) {

@@ -82,13 +82,15 @@ namespace ePaper {
         DC.setDigitalValue(DC_COMMAND);
         CS.setDigitalValue(CS_ACTIVE);
         spi.write(command);
+        CS.setDigitalValue(CS_INACTIVE);
         if (len > 0) {
             DC.setDigitalValue(DC_DATA);
+            CS.setDigitalValue(CS_ACTIVE);
             for(auto x = 0; x < len; x++){
                 spi.write(data[x]);
             }
+            CS.setDigitalValue(CS_INACTIVE);
         }
-        CS.setDigitalValue(CS_INACTIVE);
     }
 
     void spiCommand(uint8_t command) {
@@ -99,7 +101,9 @@ namespace ePaper {
         DC.setDigitalValue(DC_COMMAND);
         CS.setDigitalValue(CS_ACTIVE);
         spi.write(command);
+        CS.setDigitalValue(CS_INACTIVE);
         DC.setDigitalValue(DC_DATA);
+        CS.setDigitalValue(CS_ACTIVE);
         for(auto c : data){
             spi.write(c);
         }

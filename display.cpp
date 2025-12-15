@@ -117,7 +117,7 @@ namespace ePaper {
 
     //%
     void clear() {
-        memset(buf_b, 0xff, (COLS / 8) * ROWS);
+        memset(buf_b, 0x00, (COLS / 8) * ROWS);
         memset(buf_r, 0x00, (COLS / 8) * ROWS);
     }
 

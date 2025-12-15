@@ -63,8 +63,9 @@ constexpr uint8_t ROWS = 300;
 constexpr uint8_t OFFSET_X = 0;
 constexpr uint8_t OFFSET_Y = 6;
 
-uint8_t *buf_b;
-uint8_t *buf_r;
+//uint8_t *buf_b;
+//uint8_t *buf_r;
+uint8_t *buf;
 
 SPI spi(MOSI, MISO, SCK);
 
@@ -132,8 +133,9 @@ namespace ePaper {
 
     //%
     void clear(uint8_t color) {
-        memset(buf_b, 0x00, (COLS / 8) * ROWS);
-        memset(buf_r, color, (COLS / 8) * ROWS);
+        //memset(buf_b, 0x00, (COLS / 8) * ROWS);
+        //memset(buf_r, color, (COLS / 8) * ROWS);
+        memset(buf, color, (COLS / 8) * ROWS);
     }
 
     //%
@@ -146,18 +148,20 @@ namespace ePaper {
         y /= 8;
         uint16_t offset = (x * (COLS / 8)) + y;
 
-        uint8_t byte_b = buf_b[offset] | (0b1 << shift);
-        uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
+        uint8_t byte_b = buf[offset] | (0b1 << shift);
+        //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
+        //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
 
-        if(color == 2) {
-            byte_r |= 0b1 << shift;
-        }
+        //if(color == 2) {
+        //    byte_r |= 0b1 << shift;
+        //}
         if(color == 1) {
             byte_b &= ~(0b1 << shift);
         }
 
-        buf_b[offset] = byte_b;
-        buf_r[offset] = byte_r;
+        buf[offset] = byte_b;
+        //buf_b[offset] = byte_b;
+        //buf_r[offset] = byte_r;
     }
 
     void update() {
@@ -169,9 +173,11 @@ namespace ePaper {
     //%
     void show() {
         spiCommand(WRITE_RAM);
-        spiData(buf_b, (COLS / 8) * ROWS);
+        //spiData(buf_b, (COLS / 8) * ROWS);
+        spiData(buf, (COLS / 8) * ROWS);
         spiCommand(WRITE_ALTRAM);
-        spiData(buf_r, (COLS / 8) * ROWS);
+        //spiData(buf_r, (COLS / 8) * ROWS);
+        spiData(buf, (COLS / 8) * ROWS);
         update();
 /*
         spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
@@ -225,17 +231,20 @@ namespace ePaper {
         spiCommand(0x4E, {0x00});
         spiCommand(0x4F, {0x2B, 0x01});
 
+        buf = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
-        //clear(0xFF);
+        clear(0xFF);
+        /*
         spiCommand(WRITE_RAM);
         for(int i=0; i<15000; i++) {
-            spiData(0x00);
+            spiData(0xFF);
         }
         spiCommand(WRITE_ALTRAM);
         for(int i=0; i<15000; i++) {
             spiData(0xFF);
         }
+        */
         update();
 
         initialized = true;

@@ -278,7 +278,7 @@ namespace ePaper {
         spiCommand(WRITE_RAM);
         spiDataStart();
         for(int i=0; i<15000; i++) {
-                spiData(0xFF);
+                if ((i % 2) == 0) spiData(0xFF); else spiData(0x00);
         }
         spiDataEnd();
         spiCommand(WRITE_ALTRAM);

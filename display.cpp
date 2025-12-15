@@ -140,8 +140,9 @@ namespace ePaper {
         memset(buf, color, (COLS / 8) * ROWS);
         memset(buf, color, (COLS / 8) * ROWS);
     }
-
+/*
     //%
+    
     void setPixel(int y, int x, int color) {
         if(x >= WIDTH) return;
         if(y >= HEIGHT) return;
@@ -168,7 +169,29 @@ namespace ePaper {
         //buf_b[offset] = byte_b;
         //buf_r[offset] = byte_r;
     }
+*/
+    void setPixel(int x, int y, int color) {
+        if(x >= WIDTH) return;
+        if(y >= HEIGHT) return;
+        uint8_t shift = (x % 8);
+        x /= 8;
+        uint16_t offset = (y * (COLS / 8)) + x;
 
+        uint8_t byte_b = buf[offset] | (0b1 << shift);
+        //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
+        //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
+
+        //if(color == 2) {
+        //    byte_r |= 0b1 << shift;
+        //}
+        if(color == 1) {
+            byte_b &= ~(0b1 << shift);
+        }
+
+        buf[offset] = byte_b;
+        //buf_b[offset] = byte_b;
+        //buf_r[offset] = byte_r;
+    }
     void update() {
         spiCommand(0x22, {0xF7}); 
         spiCommand(0x20);

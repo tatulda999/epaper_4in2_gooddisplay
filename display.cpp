@@ -213,9 +213,9 @@ namespace ePaper {
     //%
     void fast_init() {
         RESET.setDigitalValue(0);
-        uBit.sleep(10);
+        uBit.sleep(100);
         RESET.setDigitalValue(1);
-        uBit.sleep(10);
+        uBit.sleep(100);
 
         busyWait();
         spiCommand(0x12);

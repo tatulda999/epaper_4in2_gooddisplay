@@ -71,7 +71,7 @@ SPI spi(MOSI, MISO, SCK);
 bool initialized = false;
 
 
-namespace inkybit {
+namespace ePaper {
     void busyWait() {
         while(BUSY.getDigitalValue()) {
             uBit.sleep(50);

@@ -61,7 +61,7 @@ constexpr uint8_t HEIGHT = 122;
 constexpr uint8_t COLS = 200;
 constexpr uint8_t ROWS = 150;
 constexpr uint8_t OFFSET_X = 0;
-constexpr uint8_t OFFSET_Y = 6;
+constexpr uint8_t OFFSET_Y = 0;
 
 //uint8_t *buf_b;
 //uint8_t *buf_r;
@@ -143,8 +143,9 @@ namespace ePaper {
         if(x >= WIDTH) return;
         if(y >= HEIGHT) return;
         y += OFFSET_Y;
-        y = COLS - 1 - y;
-        uint8_t shift = 7 - (y % 8);
+        //y = COLS - 1 - y;
+        //uint8_t shift = 7 - (y % 8);
+        uint8_t shift = (y % 8);
         y /= 8;
         uint16_t offset = (x * (COLS / 8)) + y;
 

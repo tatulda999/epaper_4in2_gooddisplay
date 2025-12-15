@@ -55,8 +55,8 @@ constexpr uint8_t luts[30] = {
     0xF8, 0xB4, 0x13, 0x51, 0x35, 0x51, 0x51, 0x19, 0x01, 0x00
 };
 
-constexpr uint8_t WIDTH = 250;
-constexpr uint8_t HEIGHT = 122;
+constexpr uint8_t WIDTH = 400;
+constexpr uint8_t HEIGHT = 75;
 
 constexpr uint8_t COLS = 400;
 constexpr uint8_t ROWS = 75;
@@ -136,13 +136,16 @@ namespace ePaper {
         //memset(buf_b, 0x00, (COLS / 8) * ROWS);
         //memset(buf_r, color, (COLS / 8) * ROWS);
         memset(buf, color, (COLS / 8) * ROWS);
+        memset(buf, color, (COLS / 8) * ROWS);
+        memset(buf, color, (COLS / 8) * ROWS);
+        memset(buf, color, (COLS / 8) * ROWS);
     }
 
     //%
     void setPixel(int x, int y, int color) {
         if(x >= WIDTH) return;
         if(y >= HEIGHT) return;
-        //x = ROWS - 1 - x;
+        x = ROWS - 1 - x;
         y += OFFSET_Y;
         y = COLS - 1 - y;
         uint8_t shift = 7 - (y % 8);
@@ -242,8 +245,8 @@ namespace ePaper {
         buf = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
-        //clear(0xFF);
-        
+        clear(0xFF);
+        /*
         spiCommand(WRITE_RAM);
         for(int i=0; i<15000; i++) {
             spiData(0xFF);
@@ -252,7 +255,7 @@ namespace ePaper {
         for(int i=0; i<15000; i++) {
             spiData(0xFF);
         }
-        
+        */
         update();
 
         initialized = true;

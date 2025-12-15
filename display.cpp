@@ -162,8 +162,8 @@ namespace ePaper {
     void show() {
         spiCommand(WRITE_RAM);
         spiData(buf_b, (COLS / 8) * ROWS);
-        //spiCommand(WRITE_ALTRAM);
-        //spiData(buf_r, (COLS / 8) * ROWS);
+        spiCommand(WRITE_ALTRAM);
+        spiData(buf_r, (COLS / 8) * ROWS);
         update();
 /*
         spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});

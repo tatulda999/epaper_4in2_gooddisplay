@@ -252,7 +252,7 @@ namespace ePaper {
     //%
     void init() {
         if(initialized) return;
-        spi.format(8,3);
+        spi.format(8,0);
         spi.frequency(4000000);
         
         reset();

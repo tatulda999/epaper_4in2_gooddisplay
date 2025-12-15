@@ -1,4 +1,4 @@
-//% weight=100 color=#008080 icon="\uf043" block="Inky:Bit"
+//% weight=100 color=#008080 icon="\uf043" block="ePaper"
 namespace ePaper {
 
     /**
@@ -11,8 +11,8 @@ namespace ePaper {
         return i + 1
     }
 
-    const WIDTH: number = 250
-    const HEIGHT: number = 122
+    const WIDTH: number = 400
+    const HEIGHT: number = 300
 
     let UPSIDE_DOWN: boolean = false
 
@@ -75,8 +75,8 @@ namespace ePaper {
         Black = 1,
         //% block="white"
         White = 0,
-        //% block="accent"
-        Accent = 2
+        ////% block="accent"
+        //Accent = 2
     }
 
     export enum PixelSize {

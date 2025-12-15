@@ -441,7 +441,7 @@ namespace ePaper {
     //% blockId=inkybit_clear
     //% block="clear the display"
     export function clear() {
-        _clear()
+        _clear(0xFF)
     }
 
     /**
@@ -487,7 +487,7 @@ namespace ePaper {
     }
 
     //% shim=ePaper::clear
-    function _clear(): void {
+    function _clear(color :number): void {
         return
     }
 

@@ -118,7 +118,7 @@ namespace ePaper {
     //%
     void clear() {
         memset(buf_b, 0xFF, (COLS / 8) * ROWS);
-        memset(buf_r, 0xFF, (COLS / 8) * ROWS);
+        memset(buf_r, 0x00, (COLS / 8) * ROWS);
     }
 
     //%
@@ -155,8 +155,8 @@ namespace ePaper {
     void show() {
         spiCommand(WRITE_RAM);
         spiData(buf_b, (COLS / 8) * ROWS);
-        spiCommand(WRITE_ALTRAM);
-        spiData(buf_r, (COLS / 8) * ROWS);
+        //spiCommand(WRITE_ALTRAM);
+        //spiData(buf_r, (COLS / 8) * ROWS);
         update();
 /*
         spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});

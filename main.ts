@@ -542,3 +542,4 @@ namespace ePaper {
 }
 
 ePaper.init()
+pins.spiFrequency(10000000);

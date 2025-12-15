@@ -123,9 +123,9 @@ namespace ePaper {
     }
 
     //%
-    void clear() {
-        memset(buf_b, 0xFF, (COLS / 8) * ROWS);
-        memset(buf_r, 0x00, (COLS / 8) * ROWS);
+    void clear(uint8_t color) {
+        memset(buf_b, 0x00, (COLS / 8) * ROWS);
+        memset(buf_r, color, (COLS / 8) * ROWS);
     }
 
     //%
@@ -187,20 +187,26 @@ namespace ePaper {
 */
     }
 
+    void reset() {
+        RESET.setDigitalValue(1);
+        uBit.sleep(20);
+        RESET.setDigitalValue(0);
+        uBit.sleep(5);
+        RESET.setDigitalValue(1);
+        uBit.sleep(20);
+    }
+
     //%
     void init() {
         if(initialized) return;
         spi.format(8,3);
         spi.frequency(4000000);
         
-        RESET.setDigitalValue(0);
-        uBit.sleep(10);
-        RESET.setDigitalValue(1);
-        uBit.sleep(10);
+        reset();
 
         busyWait();
         spiCommand(0x12);
-        uBit.sleep(5);
+        //uBit.sleep(5);
         busyWait();
 
         spiCommand(0x21, {0x40, 0x00});
@@ -213,7 +219,7 @@ namespace ePaper {
 
         buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
-        clear();
+        clear(0xFF);
 
         initialized = true;
     }
@@ -221,14 +227,11 @@ namespace ePaper {
 
     //%
     void fast_init() {
-        RESET.setDigitalValue(0);
-        uBit.sleep(100);
-        RESET.setDigitalValue(1);
-        uBit.sleep(100);
+        reset();
 
         busyWait();
         spiCommand(0x12);
-        uBit.sleep(5);
+        //uBit.sleep(5);
         busyWait();
 
         spiCommand(0x21, {0x40, 0x00});

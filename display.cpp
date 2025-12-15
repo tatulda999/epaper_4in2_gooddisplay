@@ -122,6 +122,14 @@ namespace ePaper {
         CS.setDigitalValue(CS_INACTIVE);
     }
 
+    void spiData(uint8_t data) {
+        CS.setDigitalValue(CS_INACTIVE);
+        CS.setDigitalValue(CS_ACTIVE);
+        DC.setDigitalValue(DC_DATA);
+        spi.write(data);
+        CS.setDigitalValue(CS_INACTIVE);
+    }
+
     //%
     void clear(uint8_t color) {
         memset(buf_b, 0x00, (COLS / 8) * ROWS);

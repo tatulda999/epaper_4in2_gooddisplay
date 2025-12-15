@@ -16,6 +16,10 @@ namespace ePaper {
     export function pokus() {
         _pokus()
     }
+    //% shim=ePaper::pokus
+    function _pokus(): void {
+        return
+    }
 
     const WIDTH: number = 400
     const HEIGHT: number = 300

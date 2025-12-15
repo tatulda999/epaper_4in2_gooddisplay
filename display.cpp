@@ -146,7 +146,7 @@ namespace ePaper {
     }
 
     void update() {
-        spiCommand(0x22, {0xF7}); 
+        spiCommand(0x22, {0xC7/*0xF7*/}); 
         spiCommand(0x20);
         busyWait(); 
     }

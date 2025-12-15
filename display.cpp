@@ -273,13 +273,15 @@ namespace ePaper {
         spiCommand(WRITE_RAM);
         for(int y=0; y<ROWS; y++) {
             for(int x=0; x<(COLS/8); x++) {
-                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                //if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                spiData(0xFF);
             }
         }
         spiCommand(WRITE_ALTRAM);
         for(int y=0; y<ROWS; y++) {
             for(int x=0; x<(COLS/8); x++) {
-                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                //if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                spiData(0xFF);
             }
         }
         

@@ -253,7 +253,7 @@ namespace ePaper {
     void init() {
         if(initialized) return;
         spi.format(8,0);
-        spi.frequency(500000);
+        spi.frequency(100000);
         
         reset();
 
@@ -274,7 +274,7 @@ namespace ePaper {
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
         clear(0xFF);
-        
+        /*
         spiCommand(WRITE_RAM);
         spiDataStart();
         for(int y=0; y<ROWS; y++) {
@@ -284,14 +284,15 @@ namespace ePaper {
             }
         }
         spiDataEnd();
-        /*
+        */
+        
         spiCommand(WRITE_RAM);
         spiDataStart();
         for(int i=0; i<15000; i++) {
                 if ((i % 2) == 0) spiData(0xFF); else spiData(0x00);
         }
         spiDataEnd();
-        */
+        
         spiCommand(WRITE_ALTRAM);
         spiDataStart();
         for(int i=0; i<15000; i++) {

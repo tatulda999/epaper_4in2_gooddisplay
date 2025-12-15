@@ -58,8 +58,8 @@ constexpr uint8_t luts[30] = {
 constexpr uint8_t WIDTH = 250;
 constexpr uint8_t HEIGHT = 122;
 
-constexpr uint8_t COLS = 300;
-constexpr uint8_t ROWS = 400;
+constexpr uint8_t COLS = 400;
+constexpr uint8_t ROWS = 300;
 constexpr uint8_t OFFSET_X = 0;
 constexpr uint8_t OFFSET_Y = 6;
 

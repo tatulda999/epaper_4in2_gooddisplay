@@ -1,2 +1,2 @@
-declare namespace inkybit {
+declare namespace ePaper {
 }

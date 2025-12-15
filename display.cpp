@@ -190,7 +190,7 @@ namespace ePaper {
     //%
     void init() {
         if(initialized) return;
-        spi.setFrequency(4000000);
+        spi.set_frequency(4000000);
         
         RESET.setDigitalValue(0);
         uBit.sleep(10);

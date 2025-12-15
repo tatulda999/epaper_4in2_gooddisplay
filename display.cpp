@@ -58,8 +58,8 @@ constexpr uint8_t luts[30] = {
 constexpr uint8_t WIDTH = 250;
 constexpr uint8_t HEIGHT = 122;
 
-constexpr uint8_t COLS = 136;
-constexpr uint8_t ROWS = 250;
+constexpr uint8_t COLS = 400;
+constexpr uint8_t ROWS = 300;
 constexpr uint8_t OFFSET_X = 0;
 constexpr uint8_t OFFSET_Y = 6;
 
@@ -145,17 +145,20 @@ namespace ePaper {
         buf_r[offset] = byte_r;
     }
 
+    void update() {
+        spiCommand(0x22, {0xF7}); 
+        spiCommand(0x20);
+        busyWait(); 
+    }
+
     //%
     void show() {
-        RESET.setDigitalValue(0);
-        uBit.sleep(100);
-        RESET.setDigitalValue(1);
-        uBit.sleep(100);
-
-        spiCommand(0x12);
-        uBit.sleep(500);
-        busyWait();
-
+        spiCommand(WRITE_RAM);
+        spiData(buf_b, (COLS / 8) * ROWS);
+        spiCommand(WRITE_ALTRAM);
+        spiData(buf_r, (COLS / 8) * ROWS);
+        update();
+/*
         spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
         spiCommand(WRITE_DUMMY, {0x1B});
         spiCommand(WRITE_GATELINE, {0x0B});
@@ -174,11 +177,30 @@ namespace ePaper {
 
         busyWait();
         spiCommand(MASTER_ACTIVATE);
+*/
     }
 
     //%
     void init() {
         if(initialized) return;
+
+        RESET.setDigitalValue(0);
+        uBit.sleep(100);
+        RESET.setDigitalValue(1);
+        uBit.sleep(100);
+
+        busyWait();
+        spiCommand(0x12);
+        uBit.sleep(500);
+        busyWait();
+
+        spiCommand(0x21, {0x40, 0x00});
+        spiCommand(0x3C, {0x05});
+        spiCommand(0x11, {0x01});
+        spiCommand(0x44, {0x00, 0x31});
+        spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});
+        spiCommand(0x4E, {0x00});
+        spiCommand(0x4F, {0x2B, 0x01});
 
         buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);

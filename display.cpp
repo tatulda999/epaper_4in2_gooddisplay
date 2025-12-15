@@ -186,4 +186,9 @@ namespace ePaper {
 
         initialized = true;
     }
+
+    //%
+    void pokus() {
+
+    }
 }

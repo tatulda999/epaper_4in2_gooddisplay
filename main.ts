@@ -11,6 +11,12 @@ namespace ePaper {
         return i + 1
     }
 
+    //% blockId= ePaperTest
+    //% block="pokus"
+    export function pokus() {
+        _pokus()
+    }
+
     const WIDTH: number = 400
     const HEIGHT: number = 300
 
@@ -459,39 +465,39 @@ namespace ePaper {
         _init()
     }
 
-    //% shim=inkybit::show
+    //% shim=ePaper::show
     function _show(): void {
         return
     }
 
-    //% shim=inkybit::clear
+    //% shim=ePaper::clear
     function _clear(): void {
         return
     }
 
-    //% shim=inkybit::setPixel
+    //% shim=ePaper::setPixel
     function _setPixel(x: number, y: number, color: number): void {
         return
     }
 
-    //% shim=inkybit::init
+    //% shim=ePaper::init
     function _init(): void {
         return
     }
 
     // Font bindings
 
-    //% shim=inkybit::getFontDataByte
+    //% shim=ePaper::getFontDataByte
     function getFontDataByte(index: number): number {
         return 0
     }
 
-    //% shim=inkybit::getFontData
+    //% shim=ePaper::getFontData
     function getFontData(index: number): Buffer {
         return pins.createBuffer(5)
     }
 
-    //% shim=inkybit::getCharWidth
+    //% shim=ePaper::getCharWidth
     function getCharWidth(char: number): number {
         return 5
     }

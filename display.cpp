@@ -279,8 +279,8 @@ namespace ePaper {
         spiDataStart();
         for(int y=0; y<ROWS; y++) {
             for(int x=0; x<(COLS/8); x++) {
-                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
-                //spiData(0xFF);
+                //if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                spiData(0x00);
             }
         }
         spiDataEnd();

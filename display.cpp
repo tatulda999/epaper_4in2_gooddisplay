@@ -129,6 +129,7 @@ namespace ePaper {
         DC.setDigitalValue(DC_DATA);
     }
     void spiData(uint8_t data) {
+        busyWait();
         spi.write(data);
     }
     void spiDataEnd() {

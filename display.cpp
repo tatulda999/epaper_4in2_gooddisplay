@@ -123,11 +123,15 @@ namespace ePaper {
         CS.setDigitalValue(CS_INACTIVE);
     }
 
-    void spiData(uint8_t data) {
+    void spiDataStart() {
         CS.setDigitalValue(CS_INACTIVE);
         CS.setDigitalValue(CS_ACTIVE);
         DC.setDigitalValue(DC_DATA);
+    }
+    void spiData(uint8_t data) {
         spi.write(data);
+    }
+    void spiDataEnd() {
         CS.setDigitalValue(CS_INACTIVE);
     }
 
@@ -269,30 +273,34 @@ namespace ePaper {
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
         clear(0xFF);
-        spiCommand(WRITE_RAM);
-        for(int i=0; i<15000; i++) {
-                spiData(0xFF);
-        }
-        spiCommand(WRITE_ALTRAM);
-        for(int i=0; i<15000; i++) {
-                spiData(0xFF);
-        }
         /*
         spiCommand(WRITE_RAM);
-        for(int y=0; y<ROWS; y++) {
-            for(int x=0; x<(COLS/8); x++) {
-                //if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+        for(int i=0; i<15000; i++) {
                 spiData(0xFF);
-            }
         }
         spiCommand(WRITE_ALTRAM);
-        for(int y=0; y<ROWS; y++) {
-            for(int x=0; x<(COLS/8); x++) {
-                //if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+        for(int i=0; i<15000; i++) {
                 spiData(0xFF);
-            }
         }
         */
+        spiCommand(WRITE_RAM);
+        spiDataStart();
+        for(int y=0; y<ROWS; y++) {
+            for(int x=0; x<(COLS/8); x++) {
+                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                //spiData(0xFF);
+            }
+        }
+        spiDataEnd();
+        spiCommand(WRITE_ALTRAM);
+        spiDataStart();
+        for(int y=0; y<ROWS; y++) {
+            for(int x=0; x<(COLS/8); x++) {
+                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                //spiData(0xFF);
+            }
+        }
+        spiDataEnd();
         update();
 
         initialized = true;

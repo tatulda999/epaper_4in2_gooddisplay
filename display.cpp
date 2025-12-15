@@ -79,18 +79,19 @@ namespace ePaper {
     }
 
     void spiCommand(uint8_t command, const uint8_t *data, int len) {
-        DC.setDigitalValue(DC_COMMAND);
-        CS.setDigitalValue(CS_ACTIVE);
-        spi.write(command);
         CS.setDigitalValue(CS_INACTIVE);
+        CS.setDigitalValue(CS_ACTIVE);
+        DC.setDigitalValue(DC_COMMAND);
+        spi.write(command);
         if (len > 0) {
-            DC.setDigitalValue(DC_DATA);
+            CS.setDigitalValue(CS_INACTIVE);
             CS.setDigitalValue(CS_ACTIVE);
+            DC.setDigitalValue(DC_DATA);
             for(auto x = 0; x < len; x++){
                 spi.write(data[x]);
             }
-            CS.setDigitalValue(CS_INACTIVE);
         }
+        CS.setDigitalValue(CS_INACTIVE);
     }
 
     void spiCommand(uint8_t command) {
@@ -98,12 +99,13 @@ namespace ePaper {
     }
 
     void spiCommand(uint8_t command, std::initializer_list<uint8_t> data) {
-        DC.setDigitalValue(DC_COMMAND);
+        CS.setDigitalValue(CS_INACTIVE);
         CS.setDigitalValue(CS_ACTIVE);
+        DC.setDigitalValue(DC_COMMAND);
         spi.write(command);
         CS.setDigitalValue(CS_INACTIVE);
-        DC.setDigitalValue(DC_DATA);
         CS.setDigitalValue(CS_ACTIVE);
+        DC.setDigitalValue(DC_DATA);
         for(auto c : data){
             spi.write(c);
         }
@@ -111,8 +113,9 @@ namespace ePaper {
     }
 
     void spiData(uint8_t *data, int len) {
-        DC.setDigitalValue(DC_DATA);
+        CS.setDigitalValue(CS_INACTIVE);
         CS.setDigitalValue(CS_ACTIVE);
+        DC.setDigitalValue(DC_DATA);
 	    for(auto x = 0; x < len; x++){
             spi.write(data[x]);
 	    }

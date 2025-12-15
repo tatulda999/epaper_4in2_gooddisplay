@@ -58,8 +58,8 @@ constexpr uint8_t luts[30] = {
 constexpr uint8_t WIDTH = 250;
 constexpr uint8_t HEIGHT = 122;
 
-constexpr uint8_t COLS = 400;
-constexpr uint8_t ROWS = 300;
+constexpr uint8_t COLS = 200;
+constexpr uint8_t ROWS = 150;
 constexpr uint8_t OFFSET_X = 0;
 constexpr uint8_t OFFSET_Y = 6;
 
@@ -175,8 +175,14 @@ namespace ePaper {
         spiCommand(WRITE_RAM);
         //spiData(buf_b, (COLS / 8) * ROWS);
         spiData(buf, (COLS / 8) * ROWS);
+        spiData(buf, (COLS / 8) * ROWS);
+        spiData(buf, (COLS / 8) * ROWS);
+        spiData(buf, (COLS / 8) * ROWS);
         spiCommand(WRITE_ALTRAM);
         //spiData(buf_r, (COLS / 8) * ROWS);
+        spiData(buf, (COLS / 8) * ROWS);
+        spiData(buf, (COLS / 8) * ROWS);
+        spiData(buf, (COLS / 8) * ROWS);
         spiData(buf, (COLS / 8) * ROWS);
         update();
 /*
@@ -234,8 +240,8 @@ namespace ePaper {
         buf = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
-        //clear(0xFF);
-        
+        clear(0xFF);
+        /*
         spiCommand(WRITE_RAM);
         for(int i=0; i<15000; i++) {
             spiData(0xFF);
@@ -244,7 +250,7 @@ namespace ePaper {
         for(int i=0; i<15000; i++) {
             spiData(0xFF);
         }
-        
+        */
         update();
 
         initialized = true;

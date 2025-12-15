@@ -253,7 +253,7 @@ namespace ePaper {
     void init() {
         if(initialized) return;
         spi.format(8,0);
-        spi.frequency(4000000);
+        spi.frequency(1000000);
         
         reset();
 
@@ -274,34 +274,39 @@ namespace ePaper {
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
         clear(0xFF);
+        
+        spiCommand(WRITE_RAM);
+        spiDataStart();
+        for(int i=0; i<15000; i++) {
+                spiData(0xFF);
+        }
+        spiDataEnd();
+        spiCommand(WRITE_ALTRAM);
+        spiDataStart();
+        for(int i=0; i<15000; i++) {
+                spiData(0xFF);
+        }
+        spiDataEnd();
         /*
         spiCommand(WRITE_RAM);
-        for(int i=0; i<15000; i++) {
-                spiData(0xFF);
+        spiDataStart();
+        for(int y=0; y<ROWS; y++) {
+            for(int x=0; x<(COLS/8); x++) {
+                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                //spiData(0xFF);
+            }
         }
+        spiDataEnd();
         spiCommand(WRITE_ALTRAM);
-        for(int i=0; i<15000; i++) {
-                spiData(0xFF);
+        spiDataStart();
+        for(int y=0; y<ROWS; y++) {
+            for(int x=0; x<(COLS/8); x++) {
+                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                //spiData(0xFF);
+            }
         }
+        spiDataEnd();
         */
-        spiCommand(WRITE_RAM);
-        spiDataStart();
-        for(int y=0; y<ROWS; y++) {
-            for(int x=0; x<(COLS/8); x++) {
-                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
-                //spiData(0xFF);
-            }
-        }
-        spiDataEnd();
-        spiCommand(WRITE_ALTRAM);
-        spiDataStart();
-        for(int y=0; y<ROWS; y++) {
-            for(int x=0; x<(COLS/8); x++) {
-                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
-                //spiData(0xFF);
-            }
-        }
-        spiDataEnd();
         update();
 
         initialized = true;

@@ -136,9 +136,9 @@ namespace ePaper {
         //memset(buf_b, 0x00, (COLS / 8) * ROWS);
         //memset(buf_r, color, (COLS / 8) * ROWS);
         memset(buf, color, (COLS / 8) * ROWS);
-        memset(buf, color, (COLS / 8) * ROWS);
-        memset(buf, color, (COLS / 8) * ROWS);
-        memset(buf, color, (COLS / 8) * ROWS);
+        //memset(buf, color, (COLS / 8) * ROWS);
+        //memset(buf, color, (COLS / 8) * ROWS);
+        //memset(buf, color, (COLS / 8) * ROWS);
     }
 /*
     //%
@@ -268,8 +268,8 @@ namespace ePaper {
         buf = (uint8_t *)malloc((COLS/2 / 8) * ROWS/2);
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
-        //clear(0xFF);
-        
+        clear(0xFF);
+        /*
         spiCommand(WRITE_RAM);
         for(int y=0; y<ROWS; y++) {
             for(int x=0; x<(COLS/8); x++) {
@@ -284,7 +284,7 @@ namespace ePaper {
                 spiData(0xFF);
             }
         }
-        
+        */
         update();
 
         initialized = true;

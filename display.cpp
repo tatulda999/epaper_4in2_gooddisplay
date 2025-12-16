@@ -319,10 +319,10 @@ namespace ePaper {
         int y;
         spiCommand(WRITE_RAM);
         spiDataStart();
-        for(y=0; y<ROWS; y++) {
-            for(x=0; x<(COLS/8); x++) {
-                //if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
-                spiData(0x00);
+        for(y=0; y<ROWS*2; y++) {
+            for(x=0; x<(COLS*2/8); x++) {
+                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+                //spiData(0x00);
             }
         }
         spiDataEnd();

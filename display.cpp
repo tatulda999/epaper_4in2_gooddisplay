@@ -213,13 +213,13 @@ namespace ePaper {
     void scale2x() {
         int src_stride;
 
-        /* Bytes per source row (ceil) */
+        // Bytes per source row (ceil)
         src_stride = (COLS + 7) / 8;
 
         for (int y = 0; y < ROWS; ++y) {
             const uint8_t* row = buf + y * src_stride;
 
-            /* Write the expanded row twice for vertical doubling */
+            // Write the expanded row twice for vertical doubling
             {
                 for (int rep = 0; rep < 2; ++rep) {
                     for (int x = 0; x < src_stride; ++x) {
@@ -279,19 +279,19 @@ namespace ePaper {
     //%
     void init() {
         if(initialized) return;
-
+        /*
         // Initialize translation arrays:
         for (int v = 0; v < 256; ++v) {
-            uint16_t out16 = 0U; /* build 16-bit pattern in an unsigned int */
+            uint16_t out16 = 0U; // build 16-bit pattern in an unsigned int
             for (int i = 0; i < 8; ++i) {
-                int bit = (v >> (7 - i)) & 1; /* MSB-first */
+                int bit = (v >> (7 - i)) & 1; // MSB-first
                 out16 <<= 2;
-                if (bit) out16 |= 0x3U;       /* duplicate horizontally */
+                if (bit) out16 |= 0x3U;       // duplicate horizontally
             }
             g_expand_hi[v] = (uint8_t)((out16 >> 8) & 0xFFU);
             g_expand_lo[v] = (uint8_t)(out16 & 0xFFU);
         }
-
+        */
 
         spi.format(8,0);
         spi.frequency(1000000);

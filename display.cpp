@@ -179,12 +179,14 @@ namespace ePaper {
         //buf_r[offset] = byte_r;
     }
 */
-    void setPixel(int x, int y, int color) {
+ void setPixel(int x, int y, int color) {
         if(x >= WIDTH) return;
         if(y >= HEIGHT) return;
-        uint8_t shift = (x % 8);
-        x /= 8;
-        uint16_t offset = (y * (COLS / 8)) + x;
+        y += OFFSET_Y;
+        y = COLS - 1 - y;
+        uint8_t shift = 7 - (y % 8);
+        y /= 8;
+        uint16_t offset = (x * (COLS / 8)) + y;
 
         uint8_t byte_b = buf[offset] | (0b1 << shift);
         //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
@@ -201,6 +203,8 @@ namespace ePaper {
         //buf_b[offset] = byte_b;
         //buf_r[offset] = byte_r;
     }
+
+    
     void update() {
         spiCommand(0x22, {0xF7}); 
         spiCommand(0x20);

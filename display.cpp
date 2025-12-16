@@ -179,7 +179,7 @@ namespace ePaper {
         //buf_r[offset] = byte_r;
     }
 */
- void setPixel(int x, int y, int color) {
+ void setPixel(int y, int x, int color) {
         if(x >= WIDTH) return;
         if(y >= HEIGHT) return;
         y += OFFSET_Y;

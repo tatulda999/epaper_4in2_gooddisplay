@@ -282,7 +282,7 @@ namespace ePaper {
 
     void reset() {
         RESET.setDigitalValue(1);
-        uBit.sleep(20);
+        uBit.sleep(100);
         RESET.setDigitalValue(0);
         uBit.sleep(5);
         RESET.setDigitalValue(1);
@@ -309,20 +309,7 @@ namespace ePaper {
         spi.format(8,0);
         spi.frequency(1000000);
         
-        reset();
-
-        busyWait();
-        spiCommand(0x12);
-        //uBit.sleep(5);
-        busyWait();
-
-        spiCommand(0x21, {0x40, 0x00});
-        spiCommand(0x3C, {0x05});
-        spiCommand(0x11, {0x01});
-        spiCommand(0x44, {0x00, 0x31});
-        spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});
-        spiCommand(0x4E, {0x00});
-        spiCommand(0x4F, {0x2B, 0x01});
+        slow_init();
 
         buf = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
@@ -401,6 +388,24 @@ namespace ePaper {
         spiCommand(0x22, {0x91, 0x20});
         busyWait();
 
+        spiCommand(0x11, {0x01});
+        spiCommand(0x44, {0x00, 0x31});
+        spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});
+        spiCommand(0x4E, {0x00});
+        spiCommand(0x4F, {0x2B, 0x01});
+    }
+
+    //%
+    void slow_init() {
+        reset();
+
+        busyWait();
+        spiCommand(0x12);
+        //uBit.sleep(5);
+        busyWait();
+
+        spiCommand(0x21, {0x40, 0x00});
+        spiCommand(0x3C, {0x05});
         spiCommand(0x11, {0x01});
         spiCommand(0x44, {0x00, 0x31});
         spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});

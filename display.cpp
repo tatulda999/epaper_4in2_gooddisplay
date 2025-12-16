@@ -55,11 +55,11 @@ constexpr uint8_t luts[30] = {
     0xF8, 0xB4, 0x13, 0x51, 0x35, 0x51, 0x51, 0x19, 0x01, 0x00
 };
 
-constexpr uint8_t WIDTH = 400;
-constexpr uint8_t HEIGHT = 300;
+constexpr uint8_t WIDTH = 200;
+constexpr uint8_t HEIGHT = 150;
 
-constexpr uint8_t COLS = 400;
-constexpr uint8_t ROWS = 300;
+constexpr uint8_t COLS = 200;
+constexpr uint8_t ROWS = 150;
 constexpr uint8_t OFFSET_X = 0;
 constexpr uint8_t OFFSET_Y = 6;
 
@@ -67,6 +67,10 @@ constexpr uint8_t OFFSET_Y = 6;
 //uint8_t *buf_r;
 //uint8_t *buf;
 uint8_t buf[1000];
+
+static uint8_t g_expand_hi[256];
+static uint8_t g_expand_lo[256];
+
 
 SPI spi(MOSI, MISO, SCK);
 
@@ -204,20 +208,43 @@ namespace ePaper {
         busyWait(); 
     }
 
+
+
+    void scale2x()
+    {
+        int src_stride;
+
+        /* Bytes per source row (ceil) */
+        src_stride = (COLS + 7) / 8;
+
+        for (int y = 0; y < ROWS; ++y) {
+            const uint8_t* row = buf + y * src_stride;
+
+            /* Write the expanded row twice for vertical doubling */
+            {
+                for (int rep = 0; rep < 2; ++rep) {
+                    for (int x = 0; x < src_stride; ++x) {
+                        uint8_t v  = row[x];
+                        uint8_t hi = g_expand_hi[v];
+                        uint8_t lo = g_expand_lo[v];
+                        spiData(hi);
+                        spiData(lo);
+                    }
+                }
+            }
+        }
+    }
+
     //%
     void show() {
         spiCommand(WRITE_RAM);
         //spiData(buf_b, (COLS / 8) * ROWS);
-        spiData(buf, (COLS / 8) * ROWS);
-        spiData(buf, (COLS / 8) * ROWS);
-        spiData(buf, (COLS / 8) * ROWS);
-        spiData(buf, (COLS / 8) * ROWS);
+        scale2x()
+        //spiData(buf, (COLS / 8) * ROWS);
         spiCommand(WRITE_ALTRAM);
         //spiData(buf_r, (COLS / 8) * ROWS);
-        spiData(buf, (COLS / 8) * ROWS);
-        spiData(buf, (COLS / 8) * ROWS);
-        spiData(buf, (COLS / 8) * ROWS);
-        spiData(buf, (COLS / 8) * ROWS);
+        scale2x()
+        //spiData(buf, (COLS / 8) * ROWS);
         update();
 /*
         spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
@@ -253,8 +280,22 @@ namespace ePaper {
     //%
     void init() {
         if(initialized) return;
+
+        // Initialize translation arrays:
+        for (int v = 0; v < 256; ++v) {
+            uint16_t out16 = 0U; /* build 16-bit pattern in an unsigned int */
+            for (int i = 0; i < 8; ++i) {
+                int bit = (v >> (7 - i)) & 1; /* MSB-first */
+                out16 <<= 2;
+                if (bit) out16 |= 0x3U;       /* duplicate horizontally */
+            }
+            g_expand_hi[v] = (uint8_t)((out16 >> 8) & 0xFFU);
+            g_expand_lo[v] = (uint8_t)(out16 & 0xFFU);
+        }
+
+
         spi.format(8,0);
-        spi.frequency(100000);
+        spi.frequency(1000000);
         
         reset();
 

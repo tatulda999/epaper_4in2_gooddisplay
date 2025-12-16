@@ -65,7 +65,8 @@ constexpr uint8_t OFFSET_Y = 6;
 
 //uint8_t *buf_b;
 //uint8_t *buf_r;
-uint8_t *buf;
+//uint8_t *buf;
+uint8_t buf[15000];
 
 SPI spi(MOSI, MISO, SCK);
 
@@ -270,7 +271,7 @@ namespace ePaper {
         spiCommand(0x4E, {0x00});
         spiCommand(0x4F, {0x2B, 0x01});
 
-        buf = (uint8_t *)malloc((COLS/2 / 8) * ROWS/2);
+        //buf = (uint8_t *)malloc((COLS/2 / 8) * ROWS/2);
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
         clear(0xFF);

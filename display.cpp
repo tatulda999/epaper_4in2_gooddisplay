@@ -66,7 +66,7 @@ constexpr uint8_t OFFSET_Y = 6;
 //uint8_t *buf_b;
 //uint8_t *buf_r;
 //uint8_t *buf;
-uint8_t buf[1000];
+uint8_t buf[100];
 
 static uint8_t g_expand_hi[256];
 static uint8_t g_expand_lo[256];
@@ -210,8 +210,7 @@ namespace ePaper {
 
 
 
-    void scale2x()
-    {
+    void scale2x() {
         int src_stride;
 
         /* Bytes per source row (ceil) */

@@ -211,6 +211,12 @@ namespace ePaper {
         busyWait(); 
     }
 
+    void update_fast() {
+        spiCommand(0x22, {0xC7}); 
+        spiCommand(0x20);
+        busyWait(); 
+    }
+
 
 
     void scale2x() {
@@ -250,7 +256,6 @@ namespace ePaper {
         scale2x();
         spiDataEnd();
         //spiData(buf, (COLS / 8) * ROWS);
-        update();
 /*
         spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
         spiCommand(WRITE_DUMMY, {0x1B});
@@ -322,6 +327,7 @@ namespace ePaper {
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
         clear(0xFF);
         
+        /*
         int x;
         int y;
         spiCommand(WRITE_RAM);
@@ -333,7 +339,8 @@ namespace ePaper {
             }
         }
         spiDataEnd();
-        
+        */
+
         /*
         spiCommand(WRITE_RAM);
         spiDataStart();
@@ -342,12 +349,14 @@ namespace ePaper {
         }
         spiDataEnd();
         */
+        /*
         spiCommand(WRITE_ALTRAM);
         spiDataStart();
         for(int i=0; i<15000; i++) {
                 spiData(0xFF);
         }
         spiDataEnd();
+        */
         /*
         spiCommand(WRITE_RAM);
         spiDataStart();
@@ -368,6 +377,7 @@ namespace ePaper {
         }
         spiDataEnd();
         */
+        show();
         update();
 
         initialized = true;

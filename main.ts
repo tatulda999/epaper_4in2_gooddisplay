@@ -21,8 +21,8 @@ namespace ePaper {
         return
     }
 
-    const WIDTH: number = 400
-    const HEIGHT: number = 75
+    const WIDTH: number = 200
+    const HEIGHT: number = 150
 
     let UPSIDE_DOWN: boolean = false
 
@@ -432,6 +432,18 @@ namespace ePaper {
     //% block="display your changes"
     export function show() {
         _show()
+        _update()
+    }
+
+    /**
+     * Update inky:bit,
+     * update the e-ink display with your pretty pixels
+     */
+    //% blockId= inkybit_show_fast
+    //% block="fast display your changes"
+    export function show_fast() {
+        _show()
+        _update_fast()
     }
 
     /**
@@ -469,8 +481,6 @@ namespace ePaper {
         _init()
     }
 
-    //% blockId= ePaperFastInit
-    //% block="fast init"    
     export function fast_init() {
         _fast_init()
     }
@@ -483,6 +493,16 @@ namespace ePaper {
 
     //% shim=ePaper::show
     function _show(): void {
+        return
+    }
+
+    //% shim=ePaper::update_fast
+    function _update_fast(): void {
+        return
+    }
+
+    //% shim=ePaper::update
+    function _update(): void {
         return
     }
 

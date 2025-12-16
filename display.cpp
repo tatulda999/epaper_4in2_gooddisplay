@@ -211,7 +211,6 @@ namespace ePaper {
 
     void scale2x() {
         int src_stride;
-        uint8_t* row;
         int x;
         int y;
         int rep;
@@ -221,13 +220,11 @@ namespace ePaper {
         src_stride = (COLS + 7) / 8;
 
         for (y = 0; y < ROWS; ++y) {
-            row = buf + y * src_stride;
-
             // Write the expanded row twice for vertical doubling
             {
                 for (rep = 0; rep < 2; ++rep) {
                     for (x = 0; x < src_stride; ++x) {
-                        v  = row[x];
+                        v  = buf[(y * src_stride) + x];
                         spiData(g_expand_hi[v]);
                         spiData(g_expand_lo[v]);
                     }

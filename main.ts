@@ -22,8 +22,8 @@ namespace ePaper {
         return
     }
 */
-    const WIDTH: number = 200
-    const HEIGHT: number = 150
+    const WIDTH: number = 150
+    const HEIGHT: number = 200
 
     let UPSIDE_DOWN: boolean = false
 

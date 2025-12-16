@@ -217,7 +217,7 @@ namespace ePaper {
 
         // Bytes per source row (ceil)
         uint8_t src_stride = (COLS + 7) / 8;
-/*
+
         for (y = 0; y < ROWS; ++y) {
             // Write the expanded row twice for vertical doubling
             {
@@ -229,18 +229,18 @@ namespace ePaper {
                     } 
                 }
             }
-        }*/
+        }
     }
 
     //%
     void show() {
         spiCommand(WRITE_RAM);
         //spiData(buf_b, (COLS / 8) * ROWS);
-        scale2x()
+        scale2x();
         //spiData(buf, (COLS / 8) * ROWS);
         spiCommand(WRITE_ALTRAM);
         //spiData(buf_r, (COLS / 8) * ROWS);
-        scale2x()
+        scale2x();
         //spiData(buf, (COLS / 8) * ROWS);
         update();
 /*

@@ -68,8 +68,8 @@ constexpr uint8_t OFFSET_Y = 6;
 //uint8_t *buf;
 uint8_t buf[100];
 
-static uint8_t g_expand_hi[256];
-static uint8_t g_expand_lo[256];
+//static uint8_t g_expand_hi[256];
+//static uint8_t g_expand_lo[256];
 
 
 SPI spi(MOSI, MISO, SCK);
@@ -209,7 +209,7 @@ namespace ePaper {
     }
 
 
-
+/*
     void scale2x() {
         int src_stride;
 
@@ -233,16 +233,16 @@ namespace ePaper {
             }
         }
     }
-
+*/
     //%
     void show() {
         spiCommand(WRITE_RAM);
         //spiData(buf_b, (COLS / 8) * ROWS);
-        scale2x()
+        //scale2x()
         //spiData(buf, (COLS / 8) * ROWS);
         spiCommand(WRITE_ALTRAM);
         //spiData(buf_r, (COLS / 8) * ROWS);
-        scale2x()
+        //scale2x()
         //spiData(buf, (COLS / 8) * ROWS);
         update();
 /*

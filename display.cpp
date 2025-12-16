@@ -208,40 +208,43 @@ namespace ePaper {
     }
 
 
-/*
+
     void scale2x() {
         int src_stride;
+        uint8_t* row;
+        int x;
+        int y;
+        int rep;
+        uint8_t v;
 
         // Bytes per source row (ceil)
         src_stride = (COLS + 7) / 8;
 
-        for (int y = 0; y < ROWS; ++y) {
-            const uint8_t* row = buf + y * src_stride;
+        for (y = 0; y < ROWS; ++y) {
+            row = buf + y * src_stride;
 
             // Write the expanded row twice for vertical doubling
             {
-                for (int rep = 0; rep < 2; ++rep) {
-                    for (int x = 0; x < src_stride; ++x) {
-                        uint8_t v  = row[x];
-                        uint8_t hi = g_expand_hi[v];
-                        uint8_t lo = g_expand_lo[v];
-                        spiData(hi);
-                        spiData(lo);
+                for (rep = 0; rep < 2; ++rep) {
+                    for (x = 0; x < src_stride; ++x) {
+                        v  = row[x];
+                        spiData(g_expand_hi[v]);
+                        spiData(g_expand_lo[v]);
                     }
                 }
             }
         }
     }
-*/
+
     //%
     void show() {
         spiCommand(WRITE_RAM);
         //spiData(buf_b, (COLS / 8) * ROWS);
-        //scale2x()
+        scale2x()
         //spiData(buf, (COLS / 8) * ROWS);
         spiCommand(WRITE_ALTRAM);
         //spiData(buf_r, (COLS / 8) * ROWS);
-        //scale2x()
+        scale2x()
         //spiData(buf, (COLS / 8) * ROWS);
         update();
 /*

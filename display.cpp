@@ -278,7 +278,7 @@ namespace ePaper {
     //%
     void init() {
         if(initialized) return;
-        /*
+        
         // Initialize translation arrays:
         for (int v = 0; v < 256; ++v) {
             uint16_t out16 = 0U; // build 16-bit pattern in an unsigned int
@@ -290,7 +290,7 @@ namespace ePaper {
             g_expand_hi[v] = (uint8_t)((out16 >> 8) & 0xFFU);
             g_expand_lo[v] = (uint8_t)(out16 & 0xFFU);
         }
-        */
+        
 
         spi.format(8,0);
         spi.frequency(1000000);
@@ -310,29 +310,31 @@ namespace ePaper {
         spiCommand(0x4E, {0x00});
         spiCommand(0x4F, {0x2B, 0x01});
 
-        //buf = (uint8_t *)malloc((COLS/2 / 8) * ROWS/2);
+        buf = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
         clear(0xFF);
-        /*
+        
+        int x;
+        int y;
         spiCommand(WRITE_RAM);
         spiDataStart();
-        for(int y=0; y<ROWS; y++) {
-            for(int x=0; x<(COLS/8); x++) {
+        for(y=0; y<ROWS; y++) {
+            for(x=0; x<(COLS/8); x++) {
                 //if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
                 spiData(0x00);
             }
         }
         spiDataEnd();
-        */
         
+        /*
         spiCommand(WRITE_RAM);
         spiDataStart();
         for(int i=0; i<15000; i++) {
                 if ((i % 2) == 0) spiData(0xFF); else spiData(0x00);
         }
         spiDataEnd();
-        
+        */
         spiCommand(WRITE_ALTRAM);
         spiDataStart();
         for(int i=0; i<15000; i++) {

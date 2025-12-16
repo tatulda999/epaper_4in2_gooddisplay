@@ -4,13 +4,14 @@ namespace ePaper {
     /**
      * Test function
     */
-    //% blockId= ePaperTest
+ /*   //% blockId= ePaperTest
     //% block="test $i"
     //$ i.min=0 i.max=9
     export function test(i: number): number {
         return i + 1
     }
-
+*/
+/*
     //% blockId= ePaperTest
     //% block="pokus"
     export function pokus() {
@@ -20,7 +21,7 @@ namespace ePaper {
     function _pokus(): void {
         return
     }
-
+*/
     const WIDTH: number = 200
     const HEIGHT: number = 150
 
@@ -101,15 +102,21 @@ namespace ePaper {
     }
 
     export enum TextSize {
-        //% block="regular (2x)" defl=True
-        Regular = 2,
         //% block="tiny (1x)"
         Tiny = 1,
+        //% block="regular (2x)" defl=True
+        Regular = 2,
         //% block="medium (3x)"
         Medium = 3,
         //% block="large (4x)"
-        Large = 4
-    }
+        Large = 4,
+        //% block="extra large (5x)"
+        ExtraLarge = 5,
+         //% block="huge (6x)"
+        Huge = 6,
+         //% block="massive (7x)"
+        Massive = 7
+   }
 
     let _pixelSize: number = 1
 
@@ -387,9 +394,8 @@ namespace ePaper {
     //% block="draw text %text| at x %x| y %y| with color %color| and size %size"
     //% x.min=0 x.max=249
     //% y.min=0 y.max=119
-    //% size.min=0 size.max=20
-    export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: number = 1): void {
-    //export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
+    //export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: number = 1): void {
+    export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
         text = tokenize(text)
         _drawText(text, x, y, color, size)
     }

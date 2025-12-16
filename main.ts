@@ -437,7 +437,7 @@ namespace ePaper {
 
     /**
      * Update inky:bit,
-     * update the e-ink display with your pretty pixels
+     * update the e-ink display with your pretty pixels fast
      */
     //% blockId= inkybit_show_fast
     //% block="fast display your changes"

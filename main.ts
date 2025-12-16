@@ -387,7 +387,9 @@ namespace ePaper {
     //% block="draw text %text| at x %x| y %y| with color %color| and size %size"
     //% x.min=0 x.max=249
     //% y.min=0 y.max=119
-    export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
+    //% size.min=0 size.max=20
+    export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: number = 1): void {
+    //export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
         text = tokenize(text)
         _drawText(text, x, y, color, size)
     }
@@ -487,8 +489,14 @@ namespace ePaper {
 
     //% blockId= ePaperSleep
     //% block="sleep"
-        export function sleep() {
+    export function sleep() {
         _sleep()
+    }
+
+    //% blockId= ePaperWakeUp
+    //% block="wake up"
+    export function wake_up() {
+        _fast_init()
     }
 
     //% shim=ePaper::show

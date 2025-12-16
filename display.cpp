@@ -216,7 +216,7 @@ namespace ePaper {
         uint8_t v;
 
         // Bytes per source row (ceil)
-        constexpr uint8_t src_stride = (COLS + 7) / 8;
+        uint8_t src_stride = (COLS + 7) / 8;
 /*
         for (y = 0; y < ROWS; ++y) {
             // Write the expanded row twice for vertical doubling

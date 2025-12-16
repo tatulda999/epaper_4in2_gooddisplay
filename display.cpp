@@ -212,24 +212,24 @@ namespace ePaper {
     void scale2x() {
         uint8_t x;
         uint8_t y;
-        uint8_t rep;
+        uint8_t r;
         uint8_t v;
 
         // Bytes per source row (ceil)
-        constexpr int src_stride = (COLS + 7) / 8;
-
+        constexpr uint8_t src_stride = (COLS + 7) / 8;
+/*
         for (y = 0; y < ROWS; ++y) {
             // Write the expanded row twice for vertical doubling
             {
-                for (rep = 0; rep < 2; ++rep) { /*
+                for (r = 0; r < 2; ++r) {
                     for (x = 0; x < src_stride; ++x) {
                         v  = buf[(y * src_stride) + x];
                         spiData(g_expand_hi[v]);
                         spiData(g_expand_lo[v]);
-                    } */
+                    } 
                 }
             }
-        }
+        }*/
     }
 
     //%

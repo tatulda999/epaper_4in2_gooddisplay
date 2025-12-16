@@ -180,8 +180,8 @@ namespace ePaper {
     }
 */
  void setPixel(int y, int x, int color) {
-        if(x >= WIDTH) return;
-        if(y >= HEIGHT) return;
+        if(y >= WIDTH) return;
+        if(x >= HEIGHT) return;
         y += OFFSET_Y;
         y = COLS - 1 - y;
         uint8_t shift = 7 - (y % 8);

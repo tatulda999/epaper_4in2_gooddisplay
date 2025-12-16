@@ -236,11 +236,15 @@ namespace ePaper {
     void show() {
         spiCommand(WRITE_RAM);
         //spiData(buf_b, (COLS / 8) * ROWS);
+        spiDataStart();
         scale2x();
+        spiDataEnd();
         //spiData(buf, (COLS / 8) * ROWS);
         spiCommand(WRITE_ALTRAM);
         //spiData(buf_r, (COLS / 8) * ROWS);
+        spiDataStart();
         scale2x();
+        spiDataEnd();
         //spiData(buf, (COLS / 8) * ROWS);
         update();
 /*

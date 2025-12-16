@@ -66,7 +66,7 @@ constexpr uint8_t OFFSET_Y = 6;
 //uint8_t *buf_b;
 //uint8_t *buf_r;
 //uint8_t *buf;
-uint8_t buf[15000];
+uint8_t buf[8000];
 
 SPI spi(MOSI, MISO, SCK);
 

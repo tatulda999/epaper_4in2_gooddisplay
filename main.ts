@@ -595,12 +595,12 @@ namespace ePaper {
         return getCharWidth(charcode) * size
     }
 
-    /**
-     * Draw an ellipse with center (x, y), radii rx, ry, rotation angle (degrees),
-     * and optional color + fill. 
-     */
-    // % blockId=inkybit_draw_ellipse
-    // % block="draw ellipse with| center at x %cx and y %cy| radii x %rx and y %ry| color %color"
+/**
+ * Draw an ellipse with center (x, y), radii rx, ry, rotation angle (degrees),
+ * and optional color + fill. 
+ */
+// % blockId=inkybit_draw_ellipse
+// % block="draw ellipse with| center at x %cx and y %cy| radii x %rx and y %ry| color %color"
 export function drawEllipse(
     cx: number,
     cy: number,

@@ -595,40 +595,28 @@ namespace ePaper {
         return getCharWidth(charcode) * size
     }
 
-
     /**
      * Draw an ellipse with center (x, y), radii rx, ry, rotation angle (degrees),
      * and optional color + fill. 
      */
-    //% blockId=inkybit_draw_ellipse
-    //% block="draw ellipse with center| at x %cx and y %cy| radii x %rx and y %ry| rotation angle %angle| color %color| and filled %filled"
+    // % blockId=inkybit_draw_ellipse
+    // % block="draw ellipse with| center at x %cx and y %cy| radii x %rx and y %ry| color %color"
 export function drawEllipse(
     cx: number,
     cy: number,
     rx: number,
     ry: number,
-    angle: number = 0,
     color: Color = Color.Black,
-    filled: boolean = false
 ): void {
-    const angleRad = angle * Math.PI / 180;
     const c : number = color;
     // Normalize radii
     rx = Math.abs(rx) | 0;
     ry = Math.abs(ry) | 0;
     if (rx === 0 && ry === 0) return; // nothing to draw
 
-    // Axis-aligned fast path (angle ~ 0)
-    if (angle === 0) {
-        drawEllipseAxisAligned(cx, cy, rx, ry, c, filled);
-        return;
-    }
-
-    // Rotated ellipse path: sample parametric curve → polygon → draw outline and fill
-    drawEllipseRotated(cx, cy, rx, ry, angleRad, c, filled);
+    drawEllipseAxisAligned(cx, cy, rx, ry, c);
+    return;
 }
-
-/* ============================= Helpers ============================= */
 
 // Fast axis-aligned ellipse
 function drawEllipseAxisAligned(
@@ -636,8 +624,7 @@ function drawEllipseAxisAligned(
     cy: number,
     rx: number,
     ry: number,
-    c: Color,
-    filled: boolean
+    c: Color
 ): void {
     if (rx === 0) {
         // Vertical line (degenerate ellipse)
@@ -654,25 +641,8 @@ function drawEllipseAxisAligned(
 
     // Outline using midpoint ellipse algorithm for high-quality rasterization
     midpointEllipseOutline(cx, cy, rx, ry, c);
-
-    if (!filled) return;
-
-    // Fast scanline fill: for each y, fill between left/right ellipse x-extents.
-    const yStart = cy - ry;
-    const yEnd = cy + ry;
-    for (let y = yStart; y <= yEnd; y++) {
-        const dy = y - cy;
-        // rx * sqrt(1 - (dy^2 / ry^2))
-        const inside = 1 - (dy * dy) / (ry * ry);
-        if (inside < 0) continue; // numerical guard
-        const span = Math.floor(rx * Math.sqrt(inside));
-        const x0 = cx - span;
-        const x1 = cx + span;
-        if (x0 > x1) continue;
-        for (let x = x0; x <= x1; x++) setPixel(x, y, c);
-    }
 }
-
+ 
 // Midpoint ellipse outline (axis-aligned)
 function midpointEllipseOutline(
     cx: number,
@@ -738,107 +708,251 @@ function midpointEllipseOutline(
     }
 }
 
-// Rotated ellipse via polygon sampling + even–odd scanline fill
-function drawEllipseRotated(
-    cx: number,
-    cy: number,
-    rx: number,
-    ry: number,
-    angleRad: number,
-    c: number,
-    filled: boolean
-): void {
-    const cosA = Math.cos(angleRad);
-    const sinA = Math.sin(angleRad);
-
-    // Choose number of segments based on approximate circumference (Ramanujan)
-    const h = Math.pow((rx - ry), 2) / Math.pow((rx + ry), 2);
-    const circumferenceApprox = Math.PI * (rx + ry) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)));
-    const steps = Math.max(24, Math.ceil(circumferenceApprox)); // ~1 px per segment
-
-    const pts: { x: number; y: number }[] = [];
-    for (let i = 0; i < steps; i++) {
-        const t = (i / steps) * 2 * Math.PI;
-        const ex = rx * Math.cos(t);
-        const ey = ry * Math.sin(t);
-        // Rotate by angle: (x', y') = R * (ex, ey)
-        const xr = ex * cosA - ey * sinA;
-        const yr = ex * sinA + ey * cosA;
-        pts.push({
-            x: Math.round(cx + xr),
-            y: Math.round(cy + yr),
-        });
-    }
 
 
-    // Close the polygon
-    pts.push(pts[0]);
+//     /**
+//      * Draw an ellipse with center (x, y), radii rx, ry, rotation angle (degrees),
+//      * and optional color + fill. 
+//      */
+//     // % blockId=inkybit_draw_ellipse
+//     // % block="draw ellipse with center| at x %cx and y %cy| radii x %rx and y %ry| rotation angle %angle| color %color| and filled %filled"
+// export function drawEllipse(
+//     cx: number,
+//     cy: number,
+//     rx: number,
+//     ry: number,
+//     angle: number = 0,
+//     color: Color = Color.Black,
+//     filled: boolean = false
+// ): void {
+//     const angleRad = angle * Math.PI / 180;
+//     const c : number = color;
+//     // Normalize radii
+//     rx = Math.abs(rx) | 0;
+//     ry = Math.abs(ry) | 0;
+//     if (rx === 0 && ry === 0) return; // nothing to draw
 
-    // Outline: connect consecutive points (for continuity)
-    for (let i = 0; i < pts.length - 1; i++) {
-        const p0 = pts[i];
-        const p1 = pts[i + 1];
-        drawLine(p0.x, p0.y, p1.x, p1.y, c);
-    }
+//     // Axis-aligned fast path (angle ~ 0)
+//     if (angle === 0) {
+//         drawEllipseAxisAligned(cx, cy, rx, ry, c, filled);
+//         return;
+//     }
 
-    if (!filled) return;
+//     // Rotated ellipse path: sample parametric curve → polygon → draw outline and fill
+//     drawEllipseRotated(cx, cy, rx, ry, angleRad, c, filled);
+// }
 
-    // Even–odd scanline fill of the polygon
-    fillPolygonEvenOdd(pts, c);
-}
+// /* ============================= Helpers ============================= */
 
-// Generic polygon even–odd scanline fill using drawHLine (or per-pixel fallback)
-function fillPolygonEvenOdd(
-    pts: { x: number; y: number }[],
-    c: number
-): void {
-    let minY = Infinity, maxY = -Infinity;
-    for (const p of pts) {
-        if (p.y < minY) minY = p.y;
-        if (p.y > maxY) maxY = p.y;
-    }
-    if ((minY == Infinity) || (maxY == -Infinity)) return;
+// // Fast axis-aligned ellipse
+// function drawEllipseAxisAligned(
+//     cx: number,
+//     cy: number,
+//     rx: number,
+//     ry: number,
+//     c: Color,
+//     filled: boolean
+// ): void {
+//     if (rx === 0) {
+//         // Vertical line (degenerate ellipse)
+//         const y0 = cy - ry, y1 = cy + ry;
+//         for (let y = y0; y <= y1; y++) setPixel(cx, y, c);
+//         return;
+//     }
+//     if (ry === 0) {
+//         // Horizontal line (degenerate ellipse)
+//         const x0 = cx - rx, x1 = cx + rx;
+//         for (let x = x0; x <= x1; x++) setPixel(x, cy, c);
+//         return;
+//     }
 
-    for (let y = minY; y <= maxY; y++) {
-        const xIntersections: number[] = [];
+//     // Outline using midpoint ellipse algorithm for high-quality rasterization
+//     midpointEllipseOutline(cx, cy, rx, ry, c);
 
-        // Build intersections with scanline y
-        for (let i = 0; i < pts.length - 1; i++) {
-            const p0 = pts[i];
-            const p1 = pts[i + 1];
-            const y0 = p0.y, y1 = p1.y;
+//     if (!filled) return;
 
-            // Skip horizontal edges
-            if (y0 === y1) continue;
+//     // Fast scanline fill: for each y, fill between left/right ellipse x-extents.
+//     const yStart = cy - ry;
+//     const yEnd = cy + ry;
+//     for (let y = yStart; y <= yEnd; y++) {
+//         const dy = y - cy;
+//         // rx * sqrt(1 - (dy^2 / ry^2))
+//         const inside = 1 - (dy * dy) / (ry * ry);
+//         if (inside < 0) continue; // numerical guard
+//         const span = Math.floor(rx * Math.sqrt(inside));
+//         const x0 = cx - span;
+//         const x1 = cx + span;
+//         if (x0 > x1) continue;
+//         for (let x = x0; x <= x1; x++) setPixel(x, y, c);
+//     }
+// }
 
-            // Ensure y0 < y1
-            const upper = y1 > y0 ? p1 : p0;
-            const lower = y1 > y0 ? p0 : p1;
-            const yMin = lower.y;
-            const yMax = upper.y;
+// // Midpoint ellipse outline (axis-aligned)
+// function midpointEllipseOutline(
+//     cx: number,
+//     cy: number,
+//     rx: number,
+//     ry: number,
+//     c: number
+// ): void {
+//     // Based on the standard midpoint ellipse rasterization with four-way symmetry
+//     const rx2 = rx * rx;
+//     const ry2 = ry * ry;
+//     const twoRx2 = 2 * rx2;
+//     const twoRy2 = 2 * ry2;
 
-            // Standard even–odd rule: include upper endpoint, exclude lower
-            if (y > yMin && y <= yMax) {
-                const x0 = lower.x;
-                const x1 = upper.x;
-                const x = x0 + (x1 - x0) * ((y - yMin) / (yMax - yMin));
-                xIntersections.push(x);
-            }
-        }
+//     let x = 0;
+//     let y = ry;
 
-        if (xIntersections.length < 2) continue;
+//     // Decision parameter for region 1
+//     let dx = ry2 * x * 2;
+//     let dy = rx2 * y * 2;
+//     let d1 = ry2 - rx2 * ry + 0.25 * rx2;
 
-        xIntersections.sort((a, b) => a - b);
+//     // Region 1: slope > -1
+//     while (dx < dy) {
+//         plotFour(cx, cy, x, y, c);
+//         if (d1 < 0) {
+//             x++;
+//             dx += twoRy2;
+//             d1 += dx + ry2;
+//         } else {
+//             x++;
+//             y--;
+//             dx += twoRy2;
+//             dy -= twoRx2;
+//             d1 += dx - dy + ry2;
+//         }
+//     }
 
-        // Fill between pairs
-        for (let k = 0; k + 1 < xIntersections.length; k += 2) {
-            const xStart = Math.floor(xIntersections[k]);
-            const xEnd = Math.floor(xIntersections[k + 1]);
-            if (xEnd < xStart) continue;
-            for (let x = xStart; x <= xEnd; x++) _setPixel(x, y, c);
-        }
-    }
-}
+//     // Decision parameter for region 2
+//     let d2 = ry2 * (x + 0.5) * (x + 0.5) + rx2 * (y - 1) * (y - 1) - rx2 * ry2;
+
+//     // Region 2: slope <= -1
+//     while (y >= 0) {
+//         plotFour(cx, cy, x, y, c);
+//         if (d2 > 0) {
+//             y--;
+//             dy -= twoRx2;
+//             d2 += rx2 - dy;
+//         } else {
+//             y--;
+//             x++;
+//             dx += twoRy2;
+//             dy -= twoRx2;
+//             d2 += dx - dy + rx2;
+//         }
+//     }
+
+//     function plotFour(cx: number, cy: number, x: number, y: number, c: number) {
+//         setPixel(cx + x, cy + y, c);
+//         setPixel(cx - x, cy + y, c);
+//         setPixel(cx + x, cy - y, c);
+//         setPixel(cx - x, cy - y, c);
+//     }
+// }
+
+// // Rotated ellipse via polygon sampling + even–odd scanline fill
+// function drawEllipseRotated(
+//     cx: number,
+//     cy: number,
+//     rx: number,
+//     ry: number,
+//     angleRad: number,
+//     c: number,
+//     filled: boolean
+// ): void {
+//     const cosA = Math.cos(angleRad);
+//     const sinA = Math.sin(angleRad);
+
+//     // Choose number of segments based on approximate circumference (Ramanujan)
+//     const h = Math.pow((rx - ry), 2) / Math.pow((rx + ry), 2);
+//     const circumferenceApprox = Math.PI * (rx + ry) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)));
+//     const steps = Math.max(24, Math.ceil(circumferenceApprox)); // ~1 px per segment
+
+//     const pts: { x: number; y: number }[] = [];
+//     for (let i = 0; i < steps; i++) {
+//         const t = (i / steps) * 2 * Math.PI;
+//         const ex = rx * Math.cos(t);
+//         const ey = ry * Math.sin(t);
+//         // Rotate by angle: (x', y') = R * (ex, ey)
+//         const xr = ex * cosA - ey * sinA;
+//         const yr = ex * sinA + ey * cosA;
+//         pts.push({
+//             x: Math.round(cx + xr),
+//             y: Math.round(cy + yr),
+//         });
+//     }
+
+
+//     // Close the polygon
+//     pts.push(pts[0]);
+
+//     // Outline: connect consecutive points (for continuity)
+//     for (let i = 0; i < pts.length - 1; i++) {
+//         const p0 = pts[i];
+//         const p1 = pts[i + 1];
+//         drawLine(p0.x, p0.y, p1.x, p1.y, c);
+//     }
+
+//     if (!filled) return;
+
+//     // Even–odd scanline fill of the polygon
+//     fillPolygonEvenOdd(pts, c);
+// }
+
+// // Generic polygon even–odd scanline fill using drawHLine (or per-pixel fallback)
+// function fillPolygonEvenOdd(
+//     pts: { x: number; y: number }[],
+//     c: number
+// ): void {
+//     let minY = Infinity, maxY = -Infinity;
+//     for (const p of pts) {
+//         if (p.y < minY) minY = p.y;
+//         if (p.y > maxY) maxY = p.y;
+//     }
+//     if ((minY == Infinity) || (maxY == -Infinity)) return;
+
+//     for (let y = minY; y <= maxY; y++) {
+//         const xIntersections: number[] = [];
+
+//         // Build intersections with scanline y
+//         for (let i = 0; i < pts.length - 1; i++) {
+//             const p0 = pts[i];
+//             const p1 = pts[i + 1];
+//             const y0 = p0.y, y1 = p1.y;
+
+//             // Skip horizontal edges
+//             if (y0 === y1) continue;
+
+//             // Ensure y0 < y1
+//             const upper = y1 > y0 ? p1 : p0;
+//             const lower = y1 > y0 ? p0 : p1;
+//             const yMin = lower.y;
+//             const yMax = upper.y;
+
+//             // Standard even–odd rule: include upper endpoint, exclude lower
+//             if (y > yMin && y <= yMax) {
+//                 const x0 = lower.x;
+//                 const x1 = upper.x;
+//                 const x = x0 + (x1 - x0) * ((y - yMin) / (yMax - yMin));
+//                 xIntersections.push(x);
+//             }
+//         }
+
+//         if (xIntersections.length < 2) continue;
+
+//         xIntersections.sort((a, b) => a - b);
+
+//         // Fill between pairs
+//         for (let k = 0; k + 1 < xIntersections.length; k += 2) {
+//             const xStart = Math.floor(xIntersections[k]);
+//             const xEnd = Math.floor(xIntersections[k + 1]);
+//             if (xEnd < xStart) continue;
+//             for (let x = xStart; x <= xEnd; x++) _setPixel(x, y, c);
+//         }
+//     }
+// }
 
 }
 

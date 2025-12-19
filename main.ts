@@ -623,7 +623,7 @@ function drawEllipseAxisAligned(
     if (rx === 0) {
         // Vertical line (degenerate ellipse)
         const y0 = cy - ry, y1 = cy + ry;
-        for (let y = y0; y <= y1; y++) _setPixel(cx, y, c);
+        for (let y = y0; y <= y1; y++) setPixel(cx, y, c);
         return;
     }
     if (ry === 0) {
@@ -650,7 +650,7 @@ function drawEllipseAxisAligned(
         const x0 = cx - span;
         const x1 = cx + span;
         if (x0 > x1) continue;
-        for (let x = x0; x <= x1; x++) _setPixel(x, y, c);
+        for (let x = x0; x <= x1; x++) setPixel(x, y, c);
     }
 }
 
@@ -712,10 +712,10 @@ function midpointEllipseOutline(
     }
 
     function plotFour(cx: number, cy: number, x: number, y: number, c: number) {
-        _setPixel(cx + x, cy + y, c);
-        _setPixel(cx - x, cy + y, c);
-        _setPixel(cx + x, cy - y, c);
-        _setPixel(cx - x, cy - y, c);
+        setPixel(cx + x, cy + y, c);
+        setPixel(cx - x, cy + y, c);
+        setPixel(cx + x, cy - y, c);
+        setPixel(cx - x, cy - y, c);
     }
 }
 
@@ -750,6 +750,10 @@ function drawEllipseRotated(
             y: Math.round(cy + yr),
         });
     }
+
+
+    // Close the polygon
+    pts.push(pts[0]);
 
     // Outline: connect consecutive points (for continuity)
     for (let i = 0; i < pts.length - 1; i++) {

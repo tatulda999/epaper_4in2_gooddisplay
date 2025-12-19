@@ -841,7 +841,7 @@ function fillPolygonEvenOdd(
 }
 
 
-//pins.spiFrequency(4000000)
+pins.spiFrequency(1000000)
 ePaper.init()
 
 /*

@@ -149,7 +149,7 @@ namespace ePaper {
     }
 
     /**
-     * Display an icon on inky:bit
+     * Display an icon on ePaper
      * @param icon - icon to display
      * @param x - x position (0-249)
      * @param y - y position (0-119)
@@ -170,7 +170,7 @@ namespace ePaper {
     }
 
     /**
-     * Display an arrow on inky:bit
+     * Display an arrow on ePaper
      * @param arrow - arrow to display
      * @param x - x position (0-249)
      * @param y - y position (0-119)
@@ -188,7 +188,7 @@ namespace ePaper {
     }
 
     /**
-     * Draw an image on inky:bit
+     * Draw an image on ePaper
      * @param image - image to display
      * @param x - x position (0-249)
      * @param y - y position (0-119)
@@ -213,7 +213,7 @@ namespace ePaper {
     }
 
     /**
-     * Set an pixel on inky:bit
+     * Set an pixel on ePaper
      * @param x - x position (0-249)
      * @param y - y position (0-119)
      * @param color - color to set (0-2)
@@ -237,7 +237,7 @@ namespace ePaper {
     }
 
     /**
-     * Draw a rectangle on inky:bit
+     * Draw a rectangle on ePaper
      * @param x - x position (0-249)
      * @param y - y position (0-119)
      * @param width - width (0-249)
@@ -279,7 +279,7 @@ namespace ePaper {
     }
 
     /**
-     * Draw a line on inky:bit
+     * Draw a line on ePaper
      * @param x0 - start x position (0-249)
      * @param y0 - start y position (0-119)
      * @param x1 - end x position (0-249)
@@ -316,7 +316,7 @@ namespace ePaper {
     }
 
     /**
-     * Set scroll:bit pixel size
+     * Set ePaper pixel size
      * @param size - pixel size (1 to 4)
      */
     //% blockId=inkybit_set_pixel_size
@@ -328,7 +328,7 @@ namespace ePaper {
     }
 
     /**
-     * Get scroll:bit pixel size
+     * Get ePaper pixel size
      */
     //% blockId=inkybit_get_pixel_size
     //% block="get pixel size"
@@ -384,7 +384,7 @@ namespace ePaper {
     }
 
     /**
-     * Draw text on scroll:bit
+     * Draw text on ePaper
      * @param col - column to set (0-16)
      * @param row - row to set (0-6)
      * @param text - text to show
@@ -413,7 +413,7 @@ namespace ePaper {
     }
 
     /**
-     * Return the width of inky:bit
+     * Return the width of ePaper
      */
     //% blockId=scrollbit_cols
     //% block="width"
@@ -423,7 +423,7 @@ namespace ePaper {
     }
 
     /**
-     * Return the height of inky:bit
+     * Return the height of ePaper
      */
     //% blockId=inkybit_height
     //% block="height"
@@ -433,7 +433,7 @@ namespace ePaper {
     }
 
     /**
-     * Update inky:bit,
+     * Update ePaper,
      * update the e-ink display with your pretty pixels
      */
     //% blockId=inkybit_show
@@ -444,8 +444,8 @@ namespace ePaper {
     }
 
     /**
-     * Update inky:bit,
-     * update the e-ink display with your pretty pixels fast
+     * Update ePaper,
+     * update fast the e-ink display with your pretty pixels
      */
     //% blockId= inkybit_show_fast
     //% block="fast display your changes"
@@ -455,35 +455,36 @@ namespace ePaper {
     }
 
     /**
-     * Clear inky:bit,
+     * Clear ePaper,
      * clear the e-ink display for a blank canvas
      */
     //% blockId=inkybit_clear
-    //% block="clear the display"
-    export function clear() {
-        _clear(0xFF)
+    //% block="clear the display with color %color"
+    export function clear(color: Color = Color.White) {
+        if (color == Color.White) _clear(0xFF)
+        else _clear(0x00)
     }
 
-    /**
-     * Clear a rectangle on inky:bit
-     * @param x - x position (0-249)
-     * @param y - y position (0-119)
-     * @param width - width (0-249)
-     * @param height - height (0-119)
-     */
-    //% blockId=inkybit_clear_rectangle
-    //% block="clear rectangle at x %x| y %y| width %width| height %height"
-    //% x.min=0 x.max=249
-    //% y.min=0 y.max=119
-    //% width.min=0 width.max=249
-    //% width.min=0 width.max=119
-    export function clearRectangle(x: number, y: number, width: number, height: number): void {
-        let c: number = Color.White
-        let ly: number = 0
-        for (ly = y; ly <= y + height; ly++) {
-            drawLine(x, ly, x + width, ly, c)
-        }
-    }
+    // /**
+    //  * Clear a rectangle on ePaper
+    //  * @param x - x position (0-249)
+    //  * @param y - y position (0-119)
+    //  * @param width - width (0-249)
+    //  * @param height - height (0-119)
+    //  */
+    // //% blockId=inkybit_clear_rectangle
+    // //% block="clear rectangle at x %x| y %y| width %width| height %height"
+    // //% x.min=0 x.max=249
+    // //% y.min=0 y.max=119
+    // //% width.min=0 width.max=249
+    // //% width.min=0 width.max=119
+    // export function clearRectangle(x: number, y: number, width: number, height: number): void {
+    //     let c: number = Color.White
+    //     let ly: number = 0
+    //     for (ly = y; ly <= y + height; ly++) {
+    //         drawLine(x, ly, x + width, ly, c)
+    //     }
+    // }
 
     export function init() {
         _init()
@@ -580,7 +581,7 @@ namespace ePaper {
     }
 }
 
-pins.spiFrequency(4000000)
+//pins.spiFrequency(4000000)
 ePaper.init()
 
 /*

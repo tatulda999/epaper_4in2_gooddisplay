@@ -223,8 +223,6 @@ namespace ePaper {
     //% x.min=0 x.max=199
     //% y.min=0 y.max=149
     export function setPixel(x: number, y: number, color: Color = Color.Black): void {
-        x *= _pixelSize
-        y *= _pixelSize
         let c: number = color
         let px: number = 0
         let py: number = 0

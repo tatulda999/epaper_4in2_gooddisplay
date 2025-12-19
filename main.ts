@@ -331,7 +331,7 @@ namespace ePaper {
     //% length.min=0 length=199
     export function drawLineAngle(x: number, y: number, angle: number = 0, length: number, color: Color = Color.Black): void {
         const angleRad = angle * Math.PI / 180;
-        drawLineAngle(x,y,x+Math.sin(angleRad)*length,y+Math.cos(angleRad)*length,color);
+        drawLine(x,y,x+Math.sin(angleRad)*length,y+Math.cos(angleRad)*length,color);
     }
 
     /**

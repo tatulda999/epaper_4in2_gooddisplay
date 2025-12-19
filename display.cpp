@@ -281,12 +281,12 @@ namespace ePaper {
     }
 
     void reset() {
-        RESET.setDigitalValue(1);
-        uBit.sleep(100);
+        //RESET.setDigitalValue(1);
+        uBit.sleep(10);
         RESET.setDigitalValue(0);
-        uBit.sleep(50);
+        uBit.sleep(10);
         RESET.setDigitalValue(1);
-        uBit.sleep(100);
+        uBit.sleep(10);
     }
 
     
@@ -297,7 +297,7 @@ namespace ePaper {
 
         busyWait();
         spiCommand(0x12);
-        uBit.sleep(5);
+        //uBit.sleep(5);
         busyWait();
 
         spiCommand(0x21, {0x40, 0x00});
@@ -334,7 +334,7 @@ namespace ePaper {
     //%
     void sleep() {
         spiCommand(0x10,{0x01});
-        uBit.sleep(200);
+        uBit.sleep(100);
     }
 
     //%

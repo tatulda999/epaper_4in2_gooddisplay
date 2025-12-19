@@ -472,12 +472,12 @@ namespace ePaper {
     //  * @param width - width (0-249)
     //  * @param height - height (0-119)
     //  */
-    // //% blockId=inkybit_clear_rectangle
-    // //% block="clear rectangle at x %x| y %y| width %width| height %height"
-    // //% x.min=0 x.max=249
-    // //% y.min=0 y.max=119
-    // //% width.min=0 width.max=249
-    // //% width.min=0 width.max=119
+    // // % blockId=inkybit_clear_rectangle
+    // // % block="clear rectangle at x %x| y %y| width %width| height %height"
+    // // % x.min=0 x.max=249
+    // // % y.min=0 y.max=119
+    // // % width.min=0 width.max=249
+    // // % width.min=0 width.max=119
     // export function clearRectangle(x: number, y: number, width: number, height: number): void {
     //     let c: number = Color.White
     //     let ly: number = 0

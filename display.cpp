@@ -315,6 +315,9 @@ namespace ePaper {
 
     //%
     void slow_init() {
+        spi.format(8,0);
+        spi.frequency(1000000);
+        
         reset();
 
         busyWait();
@@ -354,8 +357,7 @@ namespace ePaper {
         }
         
 
-        spi.format(8,0);
-        spi.frequency(1000000);
+
         
         slow_init();
 

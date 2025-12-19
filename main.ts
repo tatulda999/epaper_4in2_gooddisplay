@@ -516,7 +516,7 @@ namespace ePaper {
     //% blockId= ePaperWakeUp
     //% block="wake up"
     export function wake_up() {
-        _slow_init()
+        _fast_init()
     }
 
     //% shim=ePaper::show

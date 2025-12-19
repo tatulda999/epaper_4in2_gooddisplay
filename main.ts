@@ -394,7 +394,7 @@ namespace ePaper {
             for (let c_col = 0; c_col < cols; c_col++) {
                 let s_col: number = Math.floor(c_col / size)
                 if ((data[s_row] & (1 << (4 - s_col))) > 0) {
-                    setPixel(x + c_col, y + c_row, color)
+                    _setPixel(x + c_col, y + c_row, color)
                 }
             }
         }
@@ -416,7 +416,7 @@ namespace ePaper {
         let o_x: number = x
         for (let char_index: number = 0; char_index < text.length; char_index++) {
             let width: number = charWidth(text.charAt(char_index), size)
-            if ((x + width) * _pixelSize >= WIDTH) {
+            if ((x + width + _pixelSize) >= WIDTH) {
                 y += 6 * size // New line, 5px tall + 1px gap
                 x = o_x
             }

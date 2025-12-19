@@ -61,7 +61,7 @@ constexpr uint8_t HEIGHT = 150;
 constexpr uint8_t COLS = 200;
 constexpr uint8_t ROWS = 150;
 constexpr uint8_t OFFSET_X = 0;
-constexpr uint8_t OFFSET_Y = 6;
+constexpr uint8_t OFFSET_Y = 0;
 
 //uint8_t *buf_b;
 //uint8_t *buf_r;

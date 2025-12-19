@@ -334,7 +334,7 @@ namespace ePaper {
     //%
     void sleep() {
         spiCommand(0x10,{0x01});
-        uBit.sleep(100);
+        uBit.sleep(200);
     }
 
     //%

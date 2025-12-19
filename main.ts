@@ -315,6 +315,25 @@ namespace ePaper {
         }
     }
 
+        /**
+    * Draw a line on ePaper
+    * @param x0 - start x position (0-199)
+    * @param y0 - start y position (0-149)
+    * @param angle - angle (0-360)
+    * @param length - length (0-199)
+    * @param color - color to set (0-1)
+    */
+    //% blockId=inkybit_draw_line_angle
+    //% block="draw line from x %x y %y| with angle %angle| and length %length| color %color"
+    //% x.min=0 x.max=199
+    //% y.min=0 y.max=149
+    //% angle.min=0 angle.max=360
+    //% length.min=0 length=199
+    export function drawLineAngle(x: number, y: number, angle: number = 0, length: number, color: Color = Color.Black): void {
+        const angleRad = angle * Math.PI / 180;
+        drawLine(x, y, x + Math.sin(angleRad) * length, y + Math.cos(angleRad) * length, color);
+    }
+
     /**
      * Set ePaper pixel size
      * @param size - pixel size (1 to 4)

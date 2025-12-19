@@ -291,7 +291,7 @@ namespace ePaper {
     //% x1.min=0 x1.max=199
     //% y1.min=0 y1.max=149
     export function drawLine(x0: number, y0: number, x1: number, y1: number, color: Color = Color.Black): void {
-        let c: number = color
+        //let c: number = color
         let dx: number = Math.abs(x1 - x0)
         let sx: number = x0 < x1 ? 1 : -1
         let dy: number = -Math.abs(y1 - y0)
@@ -299,7 +299,7 @@ namespace ePaper {
 
         let err: number = dx + dy;  /* error value e_xy */
         while (true) {  /* loop */
-            _setPixel(x0, y0, c)
+            setPixel(x0, y0, color)
             if (x0 == x1 && y0 == y1) break;
             let e2: number = 2 * err;
             if (e2 >= dy) { /* e_xy+e_x > 0 */

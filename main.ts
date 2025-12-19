@@ -151,9 +151,9 @@ namespace ePaper {
     /**
      * Display an icon on ePaper
      * @param icon - icon to display
-     * @param x - x position (0-249)
-     * @param y - y position (0-119)
-     * @param color - color to set (0-2)
+     * @param x - x position (0-199)
+     * @param y - y position (0-149)
+     * @param color - color to set (0-1)
      */
     /*
     //% blockId=inkybit_draw_icon
@@ -161,8 +161,8 @@ namespace ePaper {
     //% icon.fieldEditor="gridpicker"
     //% icon.fieldOptions.width="400" icon.fieldOptions.columns="5"
     //% icon.fieldOptions.itemColour="black" icon.fieldOptions.tooltips="true"
-    //% x.min=0 x.max=249
-    //% y.min=0 y.max=119
+    //% x.min=0 x.max=199
+    //% y.min=0 y.max=149
     */
     export function drawIcon(icon: IconNames, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
         let image: Image = images.iconImage(icon)
@@ -172,15 +172,15 @@ namespace ePaper {
     /**
      * Display an arrow on ePaper
      * @param arrow - arrow to display
-     * @param x - x position (0-249)
-     * @param y - y position (0-119)
-     * @param color - color to set (0-2)
+     * @param x - x position (0-199)
+     * @param y - y position (0-149)
+     * @param color - color to set (0-1)
      */
     /*
     //% blockId=inkybit_draw_arrow
     //% block="draw arrow %arrow| at x %x| y %y| with color %color| and size %size"
-    //% x.min=0 x.max=249
-    //% y.min=0 y.max=119
+    //% x.min=0 x.max=199
+    //% y.min=0 y.max=149
     */
     export function drawArrow(arrow: ArrowNames, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
         let image: Image = images.arrowImage(arrow)
@@ -190,14 +190,14 @@ namespace ePaper {
     /**
      * Draw an image on ePaper
      * @param image - image to display
-     * @param x - x position (0-249)
-     * @param y - y position (0-119)
-     * @param color - color to set (0-2)
+     * @param x - x position (0-199)
+     * @param y - y position (0-149)
+     * @param color - color to set (0-1)
      */
     //% blockId=inkybit_draw_image
     //% block="draw image %image| at x %x| y %y| with color %color| and size %size"
-    //% x.min=0 x.max=249
-    //% y.min=0 y.max=119
+    //% x.min=0 x.max=199
+    //% y.min=0 y.max=149
     export function drawImage(image: Image, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
         let rows: number = 5 * size
         let cols: number = image.width() * size
@@ -214,14 +214,14 @@ namespace ePaper {
 
     /**
      * Set an pixel on ePaper
-     * @param x - x position (0-249)
-     * @param y - y position (0-119)
-     * @param color - color to set (0-2)
+     * @param x - x position (0-199)
+     * @param y - y position (0-149)
+     * @param color - color to set (0-1)
      */
     //% blockId=inkybit_set_pixel
     //% block="set pixel at x %x| y %y| with color %color"
-    //% x.min=0 x.max=249
-    //% y.min=0 y.max=119
+    //% x.min=0 x.max=199
+    //% y.min=0 y.max=149
     export function setPixel(x: number, y: number, color: Color = Color.Black): void {
         x *= _pixelSize
         y *= _pixelSize
@@ -238,19 +238,19 @@ namespace ePaper {
 
     /**
      * Draw a rectangle on ePaper
-     * @param x - x position (0-249)
-     * @param y - y position (0-119)
-     * @param width - width (0-249)
-     * @param height - height (0-119)
-     * @param color - color to set (0-2)
+     * @param x - x position (0-199)
+     * @param y - y position (0-149)
+     * @param width - width (0-199)
+     * @param height - height (0-149)
+     * @param color - color to set (0-1)
      * @param filled - whether to fill the rectangle with color
      */
     //% blockId=inkybit_draw_rectangle
     //% block="draw rectangle at x %x| y %y| width %width| height %height| color %color| filled %filled"
-    //% x.min=0 x.max=249
-    //% y.min=0 y.max=119
-    //% width.min=0 width.max=249
-    //% width.min=0 width.max=119
+    //% x.min=0 x.max=199
+    //% y.min=0 y.max=149
+    //% width.min=0 width.max=199
+    //% width.min=0 width.max=149
     export function drawRectangle(x: number, y: number, width: number, height: number, color: Color = Color.Black, filled: Boolean = false): void {
         let c: number = color
         let px: number = 0
@@ -280,18 +280,18 @@ namespace ePaper {
 
     /**
      * Draw a line on ePaper
-     * @param x0 - start x position (0-249)
-     * @param y0 - start y position (0-119)
-     * @param x1 - end x position (0-249)
-     * @param y1 - end y position (0-119)
-     * @param color - color to set (0-2)
+     * @param x0 - start x position (0-199)
+     * @param y0 - start y position (0-149)
+     * @param x1 - end x position (0-199)
+     * @param y1 - end y position (0-149)
+     * @param color - color to set (0-1)
      */
     //% blockId=inkybit_draw_line
     //% block="draw line from x %x0 y %y0| to x %x1 y %y1| color %color"
-    //% x0.min=0 x0.max=249
-    //% y0.min=0 y0.max=119
-    //% x1.min=0 x1.max=249
-    //% y1.min=0 y1.max=119
+    //% x0.min=0 x0.max=199
+    //% y0.min=0 y0.max=149
+    //% x1.min=0 x1.max=199
+    //% y1.min=0 y1.max=149
     export function drawLine(x0: number, y0: number, x1: number, y1: number, color: Color = Color.Black): void {
         let c: number = color
         let dx: number = Math.abs(x1 - x0)
@@ -355,9 +355,9 @@ namespace ePaper {
     /**
      * Draw a single alphanumeric character.
      * @param char - character to display
-     * @param x - x position (0-249)
-     * @param y - y position (0-119)
-     * @param color - color to set (0-2)
+     * @param x - x position (0-199)
+     * @param y - y position (0-149)
+     * @param color - color to set (0-1)
      */
     export function drawChar(char: string, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
         let rows: number = 5 * size
@@ -385,15 +385,11 @@ namespace ePaper {
 
     /**
      * Draw text on ePaper
-     * @param col - column to set (0-16)
-     * @param row - row to set (0-6)
-     * @param text - text to show
-     * @param brightness - brightness to set (0-255)
      */
     //% blockId=inkybit_draw_text
     //% block="draw text %text| at x %x| y %y| with color %color| and size %size"
-    //% x.min=0 x.max=249
-    //% y.min=0 y.max=119
+    //% x.min=0 x.max=199
+    //% y.min=0 y.max=149
     //export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: number = 1): void {
     export function drawText(text: string, x: number, y: number, color: Color = Color.Black, size: TextSize = TextSize.Regular): void {
         text = tokenize(text)
@@ -467,17 +463,17 @@ namespace ePaper {
 
     // /**
     //  * Clear a rectangle on ePaper
-    //  * @param x - x position (0-249)
-    //  * @param y - y position (0-119)
-    //  * @param width - width (0-249)
-    //  * @param height - height (0-119)
+    //  * @param x - x position (0-199)
+    //  * @param y - y position (0-149)
+    //  * @param width - width (0-199)
+    //  * @param height - height (0-149)
     //  */
     // // % blockId=inkybit_clear_rectangle
     // // % block="clear rectangle at x %x| y %y| width %width| height %height"
-    // // % x.min=0 x.max=249
-    // // % y.min=0 y.max=119
-    // // % width.min=0 width.max=249
-    // // % width.min=0 width.max=119
+    // // % x.min=0 x.max=199
+    // // % y.min=0 y.max=149
+    // // % width.min=0 width.max=199
+    // // % width.min=0 width.max=149
     // export function clearRectangle(x: number, y: number, width: number, height: number): void {
     //     let c: number = Color.White
     //     let ly: number = 0
@@ -579,7 +575,250 @@ namespace ePaper {
         }
         return getCharWidth(charcode) * size
     }
+
+
+    /**
+     * Draw an ellipse with center (x, y), radii rx, ry, rotation angle (degrees),
+     * and optional color + fill. 
+     */
+    //% blockId=inkybit_draw_ellipse
+    //% block="draw ellipse with center at x %cx| y %cy| radii at x %rx| y %ry| rotation angle %angle| color %color| and filled %filled"
+export function drawEllipse(
+    cx: number,
+    cy: number,
+    rx: number,
+    ry: number,
+    angle: number = 0,
+    color: Color = Color.Black,
+    filled: boolean = false
+): void {
+    const angleRad = angle * Math.PI / 180;
+    const c : number = color;
+    // Normalize radii
+    rx = Math.abs(rx) | 0;
+    ry = Math.abs(ry) | 0;
+    if (rx === 0 && ry === 0) return; // nothing to draw
+
+    // Axis-aligned fast path (angle ~ 0)
+    if (angle === 0) {
+        drawEllipseAxisAligned(cx, cy, rx, ry, c, filled);
+        return;
+    }
+
+    // Rotated ellipse path: sample parametric curve → polygon → draw outline and fill
+    drawEllipseRotated(cx, cy, rx, ry, angleRad, c, filled);
 }
+
+/* ============================= Helpers ============================= */
+
+// Fast axis-aligned ellipse
+function drawEllipseAxisAligned(
+    cx: number,
+    cy: number,
+    rx: number,
+    ry: number,
+    c: Color,
+    filled: boolean
+): void {
+    if (rx === 0) {
+        // Vertical line (degenerate ellipse)
+        const y0 = cy - ry, y1 = cy + ry;
+        for (let y = y0; y <= y1; y++) _setPixel(cx, y, c);
+        return;
+    }
+    if (ry === 0) {
+        // Horizontal line (degenerate ellipse)
+        const x0 = cx - rx, x1 = cx + rx;
+        for (let x = x0; x <= x1; x++) setPixel(x, cy, c);
+        return;
+    }
+
+    // Outline using midpoint ellipse algorithm for high-quality rasterization
+    midpointEllipseOutline(cx, cy, rx, ry, c);
+
+    if (!filled) return;
+
+    // Fast scanline fill: for each y, fill between left/right ellipse x-extents.
+    const yStart = cy - ry;
+    const yEnd = cy + ry;
+    for (let y = yStart; y <= yEnd; y++) {
+        const dy = y - cy;
+        // rx * sqrt(1 - (dy^2 / ry^2))
+        const inside = 1 - (dy * dy) / (ry * ry);
+        if (inside < 0) continue; // numerical guard
+        const span = Math.floor(rx * Math.sqrt(inside));
+        const x0 = cx - span;
+        const x1 = cx + span;
+        if (x0 > x1) continue;
+        for (let x = x0; x <= x1; x++) _setPixel(x, y, c);
+    }
+}
+
+// Midpoint ellipse outline (axis-aligned)
+function midpointEllipseOutline(
+    cx: number,
+    cy: number,
+    rx: number,
+    ry: number,
+    c: number
+): void {
+    // Based on the standard midpoint ellipse rasterization with four-way symmetry
+    const rx2 = rx * rx;
+    const ry2 = ry * ry;
+    const twoRx2 = 2 * rx2;
+    const twoRy2 = 2 * ry2;
+
+    let x = 0;
+    let y = ry;
+
+    // Decision parameter for region 1
+    let dx = ry2 * x * 2;
+    let dy = rx2 * y * 2;
+    let d1 = ry2 - rx2 * ry + 0.25 * rx2;
+
+    // Region 1: slope > -1
+    while (dx < dy) {
+        plotFour(cx, cy, x, y, c);
+        if (d1 < 0) {
+            x++;
+            dx += twoRy2;
+            d1 += dx + ry2;
+        } else {
+            x++;
+            y--;
+            dx += twoRy2;
+            dy -= twoRx2;
+            d1 += dx - dy + ry2;
+        }
+    }
+
+    // Decision parameter for region 2
+    let d2 = ry2 * (x + 0.5) * (x + 0.5) + rx2 * (y - 1) * (y - 1) - rx2 * ry2;
+
+    // Region 2: slope <= -1
+    while (y >= 0) {
+        plotFour(cx, cy, x, y, c);
+        if (d2 > 0) {
+            y--;
+            dy -= twoRx2;
+            d2 += rx2 - dy;
+        } else {
+            y--;
+            x++;
+            dx += twoRy2;
+            dy -= twoRx2;
+            d2 += dx - dy + rx2;
+        }
+    }
+
+    function plotFour(cx: number, cy: number, x: number, y: number, c: number) {
+        _setPixel(cx + x, cy + y, c);
+        _setPixel(cx - x, cy + y, c);
+        _setPixel(cx + x, cy - y, c);
+        _setPixel(cx - x, cy - y, c);
+    }
+}
+
+// Rotated ellipse via polygon sampling + even–odd scanline fill
+function drawEllipseRotated(
+    cx: number,
+    cy: number,
+    rx: number,
+    ry: number,
+    angleRad: number,
+    c: number,
+    filled: boolean
+): void {
+    const cosA = Math.cos(angleRad);
+    const sinA = Math.sin(angleRad);
+
+    // Choose number of segments based on approximate circumference (Ramanujan)
+    const h = Math.pow((rx - ry), 2) / Math.pow((rx + ry), 2);
+    const circumferenceApprox = Math.PI * (rx + ry) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)));
+    const steps = Math.max(24, Math.ceil(circumferenceApprox)); // ~1 px per segment
+
+    const pts: { x: number; y: number }[] = [];
+    for (let i = 0; i < steps; i++) {
+        const t = (i / steps) * 2 * Math.PI;
+        const ex = rx * Math.cos(t);
+        const ey = ry * Math.sin(t);
+        // Rotate by angle: (x', y') = R * (ex, ey)
+        const xr = ex * cosA - ey * sinA;
+        const yr = ex * sinA + ey * cosA;
+        pts.push({
+            x: Math.round(cx + xr),
+            y: Math.round(cy + yr),
+        });
+    }
+
+    // Outline: connect consecutive points (for continuity)
+    for (let i = 0; i < pts.length - 1; i++) {
+        const p0 = pts[i];
+        const p1 = pts[i + 1];
+        drawLine(p0.x, p0.y, p1.x, p1.y, c);
+    }
+
+    if (!filled) return;
+
+    // Even–odd scanline fill of the polygon
+    fillPolygonEvenOdd(pts, c);
+}
+
+// Generic polygon even–odd scanline fill using drawHLine (or per-pixel fallback)
+function fillPolygonEvenOdd(
+    pts: { x: number; y: number }[],
+    c: number
+): void {
+    let minY = Infinity, maxY = -Infinity;
+    for (const p of pts) {
+        if (p.y < minY) minY = p.y;
+        if (p.y > maxY) maxY = p.y;
+    }
+    if ((minY == Infinity) || (maxY == -Infinity)) return;
+
+    for (let y = minY; y <= maxY; y++) {
+        const xIntersections: number[] = [];
+
+        // Build intersections with scanline y
+        for (let i = 0; i < pts.length - 1; i++) {
+            const p0 = pts[i];
+            const p1 = pts[i + 1];
+            const y0 = p0.y, y1 = p1.y;
+
+            // Skip horizontal edges
+            if (y0 === y1) continue;
+
+            // Ensure y0 < y1
+            const upper = y1 > y0 ? p1 : p0;
+            const lower = y1 > y0 ? p0 : p1;
+            const yMin = lower.y;
+            const yMax = upper.y;
+
+            // Standard even–odd rule: include upper endpoint, exclude lower
+            if (y > yMin && y <= yMax) {
+                const x0 = lower.x;
+                const x1 = upper.x;
+                const x = x0 + (x1 - x0) * ((y - yMin) / (yMax - yMin));
+                xIntersections.push(x);
+            }
+        }
+
+        if (xIntersections.length < 2) continue;
+
+        xIntersections.sort((a, b) => a - b);
+
+        // Fill between pairs
+        for (let k = 0; k + 1 < xIntersections.length; k += 2) {
+            const xStart = Math.floor(xIntersections[k]);
+            const xEnd = Math.floor(xIntersections[k + 1]);
+            if (xEnd < xStart) continue;
+            for (let x = xStart; x <= xEnd; x++) _setPixel(x, y, c);
+        }
+    }
+}
+
+}
+
 
 //pins.spiFrequency(4000000)
 ePaper.init()

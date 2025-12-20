@@ -177,39 +177,6 @@ namespace ePaper {
             //buf_r[offset] = byte_r;
     }
 
-    
-    //%
-    void show() {
-        spiCommand(WRITE_RAM);
-        //spiData(buf_b, (COLS / 8) * ROWS);
-        spiDataStart();
-        scale2x();
-        spiDataEnd();
-        //spiData(buf, (COLS / 8) * ROWS);
-        spiCommand(WRITE_ALTRAM);
-        //spiData(buf_r, (COLS / 8) * ROWS);
-        spiDataStart();
-        scale2x();
-        spiDataEnd();
-        //spiData(buf, (COLS / 8) * ROWS);
-    }
-
-    //%
-    void update() {
-        //show();
-        spiCommand(0x22, {0xF7}); 
-        spiCommand(0x20);
-        busyWait(); 
-    }
-
-    //%
-    void update_fast() {
-        //show();
-        spiCommand(0x22, {0xC7}); 
-        spiCommand(0x20);
-        busyWait(); 
-    }
-
     void scale2x() {
         uint8_t x;
         uint8_t y;
@@ -232,6 +199,40 @@ namespace ePaper {
             }
         }
     }
+
+
+    //%
+    void show() {
+        spiCommand(WRITE_RAM);
+        //spiData(buf_b, (COLS / 8) * ROWS);
+        spiDataStart();
+        scale2x();
+        spiDataEnd();
+        //spiData(buf, (COLS / 8) * ROWS);
+        spiCommand(WRITE_ALTRAM);
+        //spiData(buf_r, (COLS / 8) * ROWS);
+        spiDataStart();
+        scale2x();
+        spiDataEnd();
+        //spiData(buf, (COLS / 8) * ROWS);
+    }
+
+    //%
+    void update() {
+        show();
+        spiCommand(0x22, {0xF7}); 
+        spiCommand(0x20);
+        busyWait(); 
+    }
+
+    //%
+    void update_fast() {
+        show();
+        spiCommand(0x22, {0xC7}); 
+        spiCommand(0x20);
+        busyWait(); 
+    }
+
 
 
     void reset() {

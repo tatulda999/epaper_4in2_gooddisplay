@@ -322,7 +322,7 @@ namespace ePaper {
 
         busyWait();
         spiCommand(0x12);
-        uBit.sleep(5);
+        //uBit.sleep(5);
         busyWait();
 
         spiCommand(0x21, {0x40, 0x00});

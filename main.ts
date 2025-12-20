@@ -125,7 +125,7 @@ let _pixelSize: number = 1
 let _pen_x: number = 0
 let _pen_y: number = 0
 let _pen_angle: number = 0
-let _pen_color: number = 1
+let _pen_color: number = 2
 
 /**
  * Pen color on ePaper at current position

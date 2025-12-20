@@ -595,12 +595,12 @@ namespace ePaper {
     }
 
 
-    /**
-     * Draw an ellipse with center (x, y), radii rx, ry, rotation angle (degrees),
-     * and optional color + fill. 
-     */
-    //% blockId=inkybit_draw_ellipse
-    //% block="draw ellipse with center at x %cx| y %cy| radii at x %rx| y %ry| rotation angle %angle| color %color| and filled %filled"
+/**
+ * Draw an ellipse with center (x, y), radii rx, ry, rotation angle (degrees),
+ * and optional color + fill. 
+ */
+//% blockId=inkybit_draw_ellipse
+//% block="draw ellipse with center at x %cx| y %cy| radii at x %rx| y %ry| rotation angle %angle| color %color| and filled %filled"
 export function drawEllipse(
     cx: number,
     cy: number,
@@ -842,7 +842,7 @@ function fillPolygonEvenOdd(
 }
 
 
-pins.spiFrequency(1000000)
+//pins.spiFrequency(1000000)
 ePaper.init()
 
 /*

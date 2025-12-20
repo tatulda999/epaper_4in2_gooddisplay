@@ -243,7 +243,7 @@ namespace ePaper {
 
     //%
     void update() {
-        show();
+        //show();
         spiCommand(0x22, {0xF7}); 
         spiCommand(0x20);
         busyWait(); 
@@ -251,7 +251,7 @@ namespace ePaper {
 
     //%
     void update_fast() {
-        show();
+        //show();
         spiCommand(0x22, {0xC7}); 
         spiCommand(0x20);
         busyWait(); 
@@ -358,15 +358,13 @@ namespace ePaper {
             g_expand_hi[v] = (uint8_t)((out16 >> 8) & 0xFFU);
             g_expand_lo[v] = (uint8_t)(out16 & 0xFFU);
         }
-        
-
-
-        
-        slow_init();
-
+           
         buf = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
+
+        slow_init();
+
         clear(0xFF);
         
         /*
@@ -419,7 +417,7 @@ namespace ePaper {
         }
         spiDataEnd();
         */
-        //show();
+        show();
         update();
         initialized = true;
     }

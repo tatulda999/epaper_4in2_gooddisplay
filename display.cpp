@@ -420,7 +420,6 @@ namespace ePaper {
         */
         show();
         update();
-
         initialized = true;
     }
 

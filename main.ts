@@ -207,16 +207,19 @@ export function penTurnLeft(angle: number): void {
 }
 
 /**
- * Pen jump on ePaper to a new position
+ * Pen go to a new absolute position on ePaper
  */
 /*
-//% blockId=inkybit_pen_jump
-//% block="pen jump to x %x and y %y"
+//% blockId=inkybit_pen_goto
+//% block="pen go to x %x and y %y"
 //% advanced
 */
-export function penJump(x: number, y: number): void {
+export function penGoto(x: number, y: number): void {
+    let old_x = _pen_x
+    let old_y = _pen_y
     _pen_x = x
     _pen_y = y
+    if (_pen_color > 0) drawLine(Math.round(old_x), Math.round(old_y), Math.round(_pen_x), Math.round(_pen_y), _pen_color - 1)
 }
 
 /**

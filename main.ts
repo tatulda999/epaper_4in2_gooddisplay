@@ -205,7 +205,7 @@ export function penTurnLeft(angle: number): void {
  */
 /*
 //% blockId=inkybit_pen_jump
-//% block="pen jump to %x and %y"
+//% block="pen jump to x %x and y %y"
 */
 export function penJump(x: number, y: number): void {
     _pen_x = x
@@ -238,7 +238,7 @@ export function penGetY(): number {
  * Pen set absolute angle on ePaper
  */
 /*
-//% blockId=inkybit_pen_jump
+//% blockId=inkybit_pen_set_angle
 //% block="pen set absolute angle %angle"
 */
 export function penAngle(angle: number): void {

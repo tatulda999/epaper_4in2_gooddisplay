@@ -133,6 +133,7 @@ let _pen_color: number = 0
 /*
 //% blockId=inkybit_pen_color
 //% block="set pen color to %color"
+//% advanced
 */
 export function penColor(color : Color): void {
     _pen_color = color + 1
@@ -145,6 +146,7 @@ export function penColor(color : Color): void {
 /*
 //% blockId=inkybit_pen_up
 //% block="pen up"
+//% advanced
 */
 export function penUp(): void {
     _pen_color = -Math.abs(_pen_color)
@@ -156,6 +158,7 @@ export function penUp(): void {
 /*
 //% blockId=inkybit_pen_down
 //% block="pen down"
+//% advanced
 */
 export function penDown(): void {
     _pen_color = Math.abs(_pen_color)
@@ -167,6 +170,7 @@ export function penDown(): void {
 /*
 //% blockId=inkybit_pen_move_forward
 //% block="pen move forward %length"
+//% advanced
 */
 export function penMoveForward(length: number): void {
     let old_x = _pen_x
@@ -184,6 +188,7 @@ export function penMoveForward(length: number): void {
 /*
 //% blockId=inkybit_pen_turn_right
 //% block="pen turn right %angle"
+//% advanced
 */
 export function penTurnRight(angle: number): void {
     _pen_angle = _pen_angle + angle
@@ -195,6 +200,7 @@ export function penTurnRight(angle: number): void {
 /*
 //% blockId=inkybit_pen_turn_left
 //% block="pen turn left %angle"
+//% advanced
 */
 export function penTurnLeft(angle: number): void {
     _pen_angle = _pen_angle - angle
@@ -206,6 +212,7 @@ export function penTurnLeft(angle: number): void {
 /*
 //% blockId=inkybit_pen_jump
 //% block="pen jump to x %x and y %y"
+//% advanced
 */
 export function penJump(x: number, y: number): void {
     _pen_x = x
@@ -218,6 +225,7 @@ export function penJump(x: number, y: number): void {
 /*
 //% blockId=inkybit_pen_get_x
 //% block="pen get x"
+//% advanced
 */
 export function penGetX(): number {
     return _pen_x
@@ -229,6 +237,7 @@ export function penGetX(): number {
 /*
 //% blockId=inkybit_pen_get_y
 //% block="pen get y"
+//% advanced
 */
 export function penGetY(): number {
     return _pen_y
@@ -240,6 +249,7 @@ export function penGetY(): number {
 /*
 //% blockId=inkybit_pen_set_angle
 //% block="pen set absolute angle %angle"
+//% advanced
 */
 export function penAngle(angle: number): void {
     _pen_angle = angle

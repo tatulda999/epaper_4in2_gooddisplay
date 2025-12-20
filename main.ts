@@ -452,10 +452,10 @@ export function height(): number {
  * update the e-ink display with your pretty pixels
  */
 //% blockId=inkybit_show
-//% block="display your changes"
+//% block="display changes"
 export function show() {
     _show()
-    // _update()
+    _update()
 }
 
 /**
@@ -463,10 +463,10 @@ export function show() {
  * update fast the e-ink display with your pretty pixels
  */
 //% blockId= inkybit_show_fast
-//% block="fast display your changes"
+//% block="fast display changes"
 export function show_fast() {
     _show()
-    //_update_fast()
+    _update_fast()
 }
 
 /**

@@ -149,9 +149,7 @@ namespace ePaper {
         //memset(buf, color, (COLS / 8) * ROWS);
         //memset(buf, color, (COLS / 8) * ROWS);
     }
-/*
-    //%
-    
+/* 
     void setPixel(int y, int x, int color) {
         if(x >= WIDTH) return;
         if(y >= HEIGHT) return;
@@ -256,8 +254,6 @@ namespace ePaper {
         spiCommand(0x20);
         busyWait(); 
     }
-
-
 
     void scale2x() {
         uint8_t x;

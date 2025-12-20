@@ -282,11 +282,11 @@ namespace ePaper {
 
     void reset() {
         //RESET.setDigitalValue(1);
-        uBit.sleep(1000);
+        uBit.sleep(10);
         RESET.setDigitalValue(0);
-        uBit.sleep(1000);
+        uBit.sleep(10);
         RESET.setDigitalValue(1);
-        uBit.sleep(1000);
+        uBit.sleep(10);
     }
 
     

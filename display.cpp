@@ -318,9 +318,10 @@ namespace ePaper {
         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
 
+        clear(0xFF);
+
         slow_init();
 
-        clear(0xFF);
         
         /*
         int x;
@@ -373,7 +374,7 @@ namespace ePaper {
         spiDataEnd();
         */
         //show();
-        update();
+        //update();
         initialized = true;
     }
 

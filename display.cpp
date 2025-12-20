@@ -77,345 +77,346 @@ bool initialized = false;
 
 
 namespace ePaper {
-    void busyWait() {
-        while(BUSY.getDigitalValue()) {
-            uBit.sleep(10);
-        }
-    }
 
-    void spiCommand(uint8_t command, const uint8_t *data, int len) {
-        CS.setDigitalValue(CS_INACTIVE);
-        CS.setDigitalValue(CS_ACTIVE);
-        DC.setDigitalValue(DC_COMMAND);
-        spi.write(command);
-        if (len > 0) {
-            CS.setDigitalValue(CS_INACTIVE);
-            CS.setDigitalValue(CS_ACTIVE);
-            DC.setDigitalValue(DC_DATA);
-            for(auto x = 0; x < len; x++){
-                spi.write(data[x]);
-            }
-        }
-        CS.setDigitalValue(CS_INACTIVE);
-    }
+//     void busyWait() {
+//         while(BUSY.getDigitalValue()) {
+//             uBit.sleep(10);
+//         }
+//     }
 
-    void spiCommand(uint8_t command) {
-        spiCommand(command, NULL, 0);
-    }
+//     void spiCommand(uint8_t command, const uint8_t *data, int len) {
+//         CS.setDigitalValue(CS_INACTIVE);
+//         CS.setDigitalValue(CS_ACTIVE);
+//         DC.setDigitalValue(DC_COMMAND);
+//         spi.write(command);
+//         if (len > 0) {
+//             CS.setDigitalValue(CS_INACTIVE);
+//             CS.setDigitalValue(CS_ACTIVE);
+//             DC.setDigitalValue(DC_DATA);
+//             for(auto x = 0; x < len; x++){
+//                 spi.write(data[x]);
+//             }
+//         }
+//         CS.setDigitalValue(CS_INACTIVE);
+//     }
 
-    void spiCommand(uint8_t command, std::initializer_list<uint8_t> data) {
-        CS.setDigitalValue(CS_INACTIVE);
-        CS.setDigitalValue(CS_ACTIVE);
-        DC.setDigitalValue(DC_COMMAND);
-        spi.write(command);
-        CS.setDigitalValue(CS_INACTIVE);
-        CS.setDigitalValue(CS_ACTIVE);
-        DC.setDigitalValue(DC_DATA);
-        for(auto c : data){
-            spi.write(c);
-        }
-        CS.setDigitalValue(CS_INACTIVE);
-    }
+//     void spiCommand(uint8_t command) {
+//         spiCommand(command, NULL, 0);
+//     }
 
-    void spiData(uint8_t *data, int len) {
-        CS.setDigitalValue(CS_INACTIVE);
-        CS.setDigitalValue(CS_ACTIVE);
-        DC.setDigitalValue(DC_DATA);
-	    for(auto x = 0; x < len; x++){
-            spi.write(data[x]);
-	    }
-        CS.setDigitalValue(CS_INACTIVE);
-    }
+//     void spiCommand(uint8_t command, std::initializer_list<uint8_t> data) {
+//         CS.setDigitalValue(CS_INACTIVE);
+//         CS.setDigitalValue(CS_ACTIVE);
+//         DC.setDigitalValue(DC_COMMAND);
+//         spi.write(command);
+//         CS.setDigitalValue(CS_INACTIVE);
+//         CS.setDigitalValue(CS_ACTIVE);
+//         DC.setDigitalValue(DC_DATA);
+//         for(auto c : data){
+//             spi.write(c);
+//         }
+//         CS.setDigitalValue(CS_INACTIVE);
+//     }
 
-    void spiDataStart() {
-        CS.setDigitalValue(CS_INACTIVE);
-        CS.setDigitalValue(CS_ACTIVE);
-        DC.setDigitalValue(DC_DATA);
-    }
-    void spiData(uint8_t data) {
-        busyWait();
-        spi.write(data);
-    }
-    void spiDataEnd() {
-        CS.setDigitalValue(CS_INACTIVE);
-    }
+//     void spiData(uint8_t *data, int len) {
+//         CS.setDigitalValue(CS_INACTIVE);
+//         CS.setDigitalValue(CS_ACTIVE);
+//         DC.setDigitalValue(DC_DATA);
+// 	    for(auto x = 0; x < len; x++){
+//             spi.write(data[x]);
+// 	    }
+//         CS.setDigitalValue(CS_INACTIVE);
+//     }
 
-    //%
-    void clear(uint8_t color) {
-        //memset(buf_b, 0x00, (COLS / 8) * ROWS);
-        //memset(buf_r, color, (COLS / 8) * ROWS);
-        memset(buf, color, (COLS / 8) * ROWS);
-        //memset(buf, color, (COLS / 8) * ROWS);
-        //memset(buf, color, (COLS / 8) * ROWS);
-        //memset(buf, color, (COLS / 8) * ROWS);
-    }
-/* 
-    void setPixel(int y, int x, int color) {
-        if(x >= WIDTH) return;
-        if(y >= HEIGHT) return;
-        x = ROWS - 1 - x;
-        y += OFFSET_Y;
-        y = COLS - 1 - y;
-        uint8_t shift = 7 - (y % 8);
-        //uint8_t shift = (y % 8);
-        y /= 8;
-        uint16_t offset = (x * (COLS / 8)) + y;
+//     void spiDataStart() {
+//         CS.setDigitalValue(CS_INACTIVE);
+//         CS.setDigitalValue(CS_ACTIVE);
+//         DC.setDigitalValue(DC_DATA);
+//     }
+//     void spiData(uint8_t data) {
+//         busyWait();
+//         spi.write(data);
+//     }
+//     void spiDataEnd() {
+//         CS.setDigitalValue(CS_INACTIVE);
+//     }
 
-        uint8_t byte_b = buf[offset] | (0b1 << shift);
-        //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
-        //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
+//     //%
+//     void clear(uint8_t color) {
+//         //memset(buf_b, 0x00, (COLS / 8) * ROWS);
+//         //memset(buf_r, color, (COLS / 8) * ROWS);
+//         memset(buf, color, (COLS / 8) * ROWS);
+//         //memset(buf, color, (COLS / 8) * ROWS);
+//         //memset(buf, color, (COLS / 8) * ROWS);
+//         //memset(buf, color, (COLS / 8) * ROWS);
+//     }
+// /* 
+//     void setPixel(int y, int x, int color) {
+//         if(x >= WIDTH) return;
+//         if(y >= HEIGHT) return;
+//         x = ROWS - 1 - x;
+//         y += OFFSET_Y;
+//         y = COLS - 1 - y;
+//         uint8_t shift = 7 - (y % 8);
+//         //uint8_t shift = (y % 8);
+//         y /= 8;
+//         uint16_t offset = (x * (COLS / 8)) + y;
 
-        //if(color == 2) {
-        //    byte_r |= 0b1 << shift;
-        //}
-        if(color == 1) {
-            byte_b &= ~(0b1 << shift);
-        }
+//         uint8_t byte_b = buf[offset] | (0b1 << shift);
+//         //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
+//         //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
 
-        buf[offset] = byte_b;
-        //buf_b[offset] = byte_b;
-        //buf_r[offset] = byte_r;
-    }
-*/
- void setPixel(int y, int x, int color) {
-        if(y >= WIDTH) return;
-        if(x >= HEIGHT) return;
-        y += OFFSET_Y;
-        y = COLS - 1 - y;
-        uint8_t shift = 7 - (y % 8);
-        y /= 8;
-        uint16_t offset = (x * (COLS / 8)) + y;
+//         //if(color == 2) {
+//         //    byte_r |= 0b1 << shift;
+//         //}
+//         if(color == 1) {
+//             byte_b &= ~(0b1 << shift);
+//         }
 
-        uint8_t byte_b = buf[offset] | (0b1 << shift);
-        //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
-        //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
+//         buf[offset] = byte_b;
+//         //buf_b[offset] = byte_b;
+//         //buf_r[offset] = byte_r;
+//     }
+// */
+//  void setPixel(int y, int x, int color) {
+//         if(y >= WIDTH) return;
+//         if(x >= HEIGHT) return;
+//         y += OFFSET_Y;
+//         y = COLS - 1 - y;
+//         uint8_t shift = 7 - (y % 8);
+//         y /= 8;
+//         uint16_t offset = (x * (COLS / 8)) + y;
 
-        //if(color == 2) {
-        //    byte_r |= 0b1 << shift;
-        //}
-        if(color == 1) {
-            byte_b &= ~(0b1 << shift);
-        }
+//         uint8_t byte_b = buf[offset] | (0b1 << shift);
+//         //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
+//         //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
 
-        buf[offset] = byte_b;
-        //buf_b[offset] = byte_b;
-        //buf_r[offset] = byte_r;
-    }
+//         //if(color == 2) {
+//         //    byte_r |= 0b1 << shift;
+//         //}
+//         if(color == 1) {
+//             byte_b &= ~(0b1 << shift);
+//         }
 
-    
-    //%
-    void show() {
-        spiCommand(WRITE_RAM);
-        //spiData(buf_b, (COLS / 8) * ROWS);
-        spiDataStart();
-        scale2x();
-        spiDataEnd();
-        //spiData(buf, (COLS / 8) * ROWS);
-        spiCommand(WRITE_ALTRAM);
-        //spiData(buf_r, (COLS / 8) * ROWS);
-        spiDataStart();
-        scale2x();
-        spiDataEnd();
-        //spiData(buf, (COLS / 8) * ROWS);
-/*
-        spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
-        spiCommand(WRITE_DUMMY, {0x1B});
-        spiCommand(WRITE_GATELINE, {0x0B});
-        spiCommand(DATA_MODE, {0x03});
-        spiCommand(SET_RAMXPOS, {0x00, COLS / 8 - 1});
-        spiCommand(SET_RAMYPOS, {0x00, 0x00, (ROWS - 1) & 0xFF, (ROWS - 1) >> 8});
-        spiCommand(WRITE_VCOM, {0x70});
-        spiCommand(WRITE_LUT, luts, sizeof(luts));
-        spiCommand(SET_RAMXCOUNT, {0x00});
-        spiCommand(SET_RAMYCOUNT, {0x00, 0x00});
-        
-        spiCommand(WRITE_RAM);
-        spiData(buf_b, (COLS / 8) * ROWS);
-        spiCommand(WRITE_ALTRAM);
-        spiData(buf_r, (COLS / 8) * ROWS);
-
-        busyWait();
-        spiCommand(MASTER_ACTIVATE);
-*/
-    }
-
-    //%
-    void update() {
-        //show();
-        spiCommand(0x22, {0xF7}); 
-        spiCommand(0x20);
-        busyWait(); 
-    }
-
-    //%
-    void update_fast() {
-        //show();
-        spiCommand(0x22, {0xC7}); 
-        spiCommand(0x20);
-        busyWait(); 
-    }
-
-    void scale2x() {
-        uint8_t x;
-        uint8_t y;
-        uint8_t r;
-        uint8_t v;
-
-        // Bytes per source row (ceil)
-        uint8_t src_stride = (COLS + 7) / 8;
-
-        for (y = 0; y < ROWS; ++y) {
-            // Write the expanded row twice for vertical doubling
-            {
-                for (r = 0; r < 2; ++r) {
-                    for (x = 0; x < src_stride; ++x) {
-                        v  = buf[(y * src_stride) + x];
-                        spiData(g_expand_hi[v]);
-                        spiData(g_expand_lo[v]);
-                    } 
-                }
-            }
-        }
-    }
-
-
-    void reset() {
-        //RESET.setDigitalValue(1);
-        uBit.sleep(10);
-        RESET.setDigitalValue(0);
-        uBit.sleep(10);
-        RESET.setDigitalValue(1);
-        uBit.sleep(10);
-    }
+//         buf[offset] = byte_b;
+//         //buf_b[offset] = byte_b;
+//         //buf_r[offset] = byte_r;
+//     }
 
     
-
-    //%
-    void fast_init() {
-        reset();
-
-        busyWait();
-        spiCommand(0x12);
-        //uBit.sleep(5);
-        busyWait();
-
-        spiCommand(0x21, {0x40, 0x00});
-        spiCommand(0x3C, {0x05});
-        spiCommand(0x1A, {0x6E});
-        spiCommand(0x22, {0x91, 0x20});
-        busyWait();
-
-        spiCommand(0x11, {0x01});
-        spiCommand(0x44, {0x00, 0x31});
-        spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});
-        spiCommand(0x4E, {0x00});
-        spiCommand(0x4F, {0x2B, 0x01});
-    }
-
-    //%
-    void slow_init() {
-        spi.format(8,0);
-        spi.frequency(1000000);
+//     //%
+//     void show() {
+//         spiCommand(WRITE_RAM);
+//         //spiData(buf_b, (COLS / 8) * ROWS);
+//         spiDataStart();
+//         scale2x();
+//         spiDataEnd();
+//         //spiData(buf, (COLS / 8) * ROWS);
+//         spiCommand(WRITE_ALTRAM);
+//         //spiData(buf_r, (COLS / 8) * ROWS);
+//         spiDataStart();
+//         scale2x();
+//         spiDataEnd();
+//         //spiData(buf, (COLS / 8) * ROWS);
+// /*
+//         spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
+//         spiCommand(WRITE_DUMMY, {0x1B});
+//         spiCommand(WRITE_GATELINE, {0x0B});
+//         spiCommand(DATA_MODE, {0x03});
+//         spiCommand(SET_RAMXPOS, {0x00, COLS / 8 - 1});
+//         spiCommand(SET_RAMYPOS, {0x00, 0x00, (ROWS - 1) & 0xFF, (ROWS - 1) >> 8});
+//         spiCommand(WRITE_VCOM, {0x70});
+//         spiCommand(WRITE_LUT, luts, sizeof(luts));
+//         spiCommand(SET_RAMXCOUNT, {0x00});
+//         spiCommand(SET_RAMYCOUNT, {0x00, 0x00});
         
-        reset();
+//         spiCommand(WRITE_RAM);
+//         spiData(buf_b, (COLS / 8) * ROWS);
+//         spiCommand(WRITE_ALTRAM);
+//         spiData(buf_r, (COLS / 8) * ROWS);
 
-        busyWait();
-        spiCommand(0x12);
-        //uBit.sleep(5);
-        busyWait();
+//         busyWait();
+//         spiCommand(MASTER_ACTIVATE);
+// */
+//     }
 
-        spiCommand(0x21, {0x40, 0x00});
-        spiCommand(0x3C, {0x05});
-        spiCommand(0x11, {0x01});
-        spiCommand(0x44, {0x00, 0x31});
-        spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});
-        spiCommand(0x4E, {0x00});
-        spiCommand(0x4F, {0x2B, 0x01});
-    }
+//     //%
+//     void update() {
+//         //show();
+//         spiCommand(0x22, {0xF7}); 
+//         spiCommand(0x20);
+//         busyWait(); 
+//     }
+
+//     //%
+//     void update_fast() {
+//         //show();
+//         spiCommand(0x22, {0xC7}); 
+//         spiCommand(0x20);
+//         busyWait(); 
+//     }
+
+//     void scale2x() {
+//         uint8_t x;
+//         uint8_t y;
+//         uint8_t r;
+//         uint8_t v;
+
+//         // Bytes per source row (ceil)
+//         uint8_t src_stride = (COLS + 7) / 8;
+
+//         for (y = 0; y < ROWS; ++y) {
+//             // Write the expanded row twice for vertical doubling
+//             {
+//                 for (r = 0; r < 2; ++r) {
+//                     for (x = 0; x < src_stride; ++x) {
+//                         v  = buf[(y * src_stride) + x];
+//                         spiData(g_expand_hi[v]);
+//                         spiData(g_expand_lo[v]);
+//                     } 
+//                 }
+//             }
+//         }
+//     }
+
+
+//     void reset() {
+//         //RESET.setDigitalValue(1);
+//         uBit.sleep(10);
+//         RESET.setDigitalValue(0);
+//         uBit.sleep(10);
+//         RESET.setDigitalValue(1);
+//         uBit.sleep(10);
+//     }
+
     
-    //%
-    void sleep() {
-        spiCommand(0x10,{0x01});
-        uBit.sleep(100);
-    }
 
-    //%
-    void init() {
-        if(initialized) return;
+//     //%
+//     void fast_init() {
+//         reset();
+
+//         busyWait();
+//         spiCommand(0x12);
+//         //uBit.sleep(5);
+//         busyWait();
+
+//         spiCommand(0x21, {0x40, 0x00});
+//         spiCommand(0x3C, {0x05});
+//         spiCommand(0x1A, {0x6E});
+//         spiCommand(0x22, {0x91, 0x20});
+//         busyWait();
+
+//         spiCommand(0x11, {0x01});
+//         spiCommand(0x44, {0x00, 0x31});
+//         spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});
+//         spiCommand(0x4E, {0x00});
+//         spiCommand(0x4F, {0x2B, 0x01});
+//     }
+
+//     //%
+//     void slow_init() {
+//         spi.format(8,0);
+//         spi.frequency(1000000);
         
-        // Initialize translation arrays:
-        for (int v = 0; v < 256; ++v) {
-            uint16_t out16 = 0U; // build 16-bit pattern in an unsigned int
-            for (int i = 0; i < 8; ++i) {
-                int bit = (v >> (7 - i)) & 1; // MSB-first
-                out16 <<= 2;
-                if (bit) out16 |= 0x3U;       // duplicate horizontally
-            }
-            g_expand_hi[v] = (uint8_t)((out16 >> 8) & 0xFFU);
-            g_expand_lo[v] = (uint8_t)(out16 & 0xFFU);
-        }
+//         reset();
+
+//         busyWait();
+//         spiCommand(0x12);
+//         //uBit.sleep(5);
+//         busyWait();
+
+//         spiCommand(0x21, {0x40, 0x00});
+//         spiCommand(0x3C, {0x05});
+//         spiCommand(0x11, {0x01});
+//         spiCommand(0x44, {0x00, 0x31});
+//         spiCommand(0x45, {0x2B, 0x01, 0x00, 0x00});
+//         spiCommand(0x4E, {0x00});
+//         spiCommand(0x4F, {0x2B, 0x01});
+//     }
+    
+//     //%
+//     void sleep() {
+//         spiCommand(0x10,{0x01});
+//         uBit.sleep(100);
+//     }
+
+//     //%
+//     void init() {
+//         if(initialized) return;
+        
+//         // Initialize translation arrays:
+//         for (int v = 0; v < 256; ++v) {
+//             uint16_t out16 = 0U; // build 16-bit pattern in an unsigned int
+//             for (int i = 0; i < 8; ++i) {
+//                 int bit = (v >> (7 - i)) & 1; // MSB-first
+//                 out16 <<= 2;
+//                 if (bit) out16 |= 0x3U;       // duplicate horizontally
+//             }
+//             g_expand_hi[v] = (uint8_t)((out16 >> 8) & 0xFFU);
+//             g_expand_lo[v] = (uint8_t)(out16 & 0xFFU);
+//         }
            
-        buf = (uint8_t *)malloc((COLS / 8) * ROWS);
-        //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
-        //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
+//         buf = (uint8_t *)malloc((COLS / 8) * ROWS);
+//         //buf_b = (uint8_t *)malloc((COLS / 8) * ROWS);
+//         //buf_r = (uint8_t *)malloc((COLS / 8) * ROWS);
 
-        slow_init();
+//         slow_init();
 
-        clear(0xFF);
+//         clear(0xFF);
         
-        /*
-        int x;
-        int y;
-        spiCommand(WRITE_RAM);
-        spiDataStart();
-        for(y=0; y<ROWS*2; y++) {
-            for(x=0; x<(COLS*2/8); x++) {
-                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
-                //spiData(0x00);
-            }
-        }
-        spiDataEnd();
-        */
+//         /*
+//         int x;
+//         int y;
+//         spiCommand(WRITE_RAM);
+//         spiDataStart();
+//         for(y=0; y<ROWS*2; y++) {
+//             for(x=0; x<(COLS*2/8); x++) {
+//                 if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+//                 //spiData(0x00);
+//             }
+//         }
+//         spiDataEnd();
+//         */
 
-        /*
-        spiCommand(WRITE_RAM);
-        spiDataStart();
-        for(int i=0; i<15000; i++) {
-                if ((i % 2) == 0) spiData(0xFF); else spiData(0x00);
-        }
-        spiDataEnd();
-        */
-        /*
-        spiCommand(WRITE_ALTRAM);
-        spiDataStart();
-        for(int i=0; i<15000; i++) {
-                spiData(0xFF);
-        }
-        spiDataEnd();
-        */
-        /*
-        spiCommand(WRITE_RAM);
-        spiDataStart();
-        for(int y=0; y<ROWS; y++) {
-            for(int x=0; x<(COLS/8); x++) {
-                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
-                //spiData(0xFF);
-            }
-        }
-        spiDataEnd();
-        spiCommand(WRITE_ALTRAM);
-        spiDataStart();
-        for(int y=0; y<ROWS; y++) {
-            for(int x=0; x<(COLS/8); x++) {
-                if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
-                //spiData(0xFF);
-            }
-        }
-        spiDataEnd();
-        */
-        show();
-        update();
-        initialized = true;
-    }
+//         /*
+//         spiCommand(WRITE_RAM);
+//         spiDataStart();
+//         for(int i=0; i<15000; i++) {
+//                 if ((i % 2) == 0) spiData(0xFF); else spiData(0x00);
+//         }
+//         spiDataEnd();
+//         */
+//         /*
+//         spiCommand(WRITE_ALTRAM);
+//         spiDataStart();
+//         for(int i=0; i<15000; i++) {
+//                 spiData(0xFF);
+//         }
+//         spiDataEnd();
+//         */
+//         /*
+//         spiCommand(WRITE_RAM);
+//         spiDataStart();
+//         for(int y=0; y<ROWS; y++) {
+//             for(int x=0; x<(COLS/8); x++) {
+//                 if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+//                 //spiData(0xFF);
+//             }
+//         }
+//         spiDataEnd();
+//         spiCommand(WRITE_ALTRAM);
+//         spiDataStart();
+//         for(int y=0; y<ROWS; y++) {
+//             for(int x=0; x<(COLS/8); x++) {
+//                 if ((y % 2) == 0) spiData(0xFF); else spiData(0x00);
+//                 //spiData(0xFF);
+//             }
+//         }
+//         spiDataEnd();
+//         */
+//         show();
+//         update();
+//         initialized = true;
+//     }
 
 }

@@ -122,6 +122,129 @@ export enum TextSize {
 
 let _pixelSize: number = 1
 
+let _pen_x: number = 0
+let _pen_y: number = 0
+let _pen_angle: number = 0
+let _pen_color: number = 0
+
+/**
+ * Pen color on ePaper at current position
+ */
+/*
+//% blockId=inkybit_pen_color
+//% block="set pen color to %color"
+*/
+export function penColor(color : Color): void {
+    _pen_color = color + 1
+}
+
+
+/**
+ * Pen up on ePaper at current position
+ */
+/*
+//% blockId=inkybit_pen_up
+//% block="pen up"
+*/
+export function penUp(): void {
+    _pen_color = -Math.abs(_pen_color)
+}
+
+/**
+ * Pen down on ePaper at current position
+ */
+/*
+//% blockId=inkybit_pen_down
+//% block="pen down"
+*/
+export function penDown(): void {
+    _pen_color = Math.abs(_pen_color)
+}
+
+/**
+ * Pen move forward on ePaper at current position
+ */
+/*
+//% blockId=inkybit_pen_move_forward
+//% block="pen move forward %length"
+*/
+export function penMoveForward(length: number): void {
+    let old_x = _pen_x
+    let old_y = _pen_y
+    const angleRad = _pen_angle * Math.PI / 180
+    _pen_x = _pen_x + Math.cos(angleRad) * length
+    _pen_y = _pen_y + Math.sin(angleRad) * length
+    if (_pen_color > 0) drawLine(Math.round(old_x), Math.round(old_y), Math.round(_pen_x), Math.round(_pen_y), _pen_color - 1)
+
+}
+
+/**
+ * Pen turn right on ePaper at current position
+ */
+/*
+//% blockId=inkybit_pen_turn_right
+//% block="pen turn right %angle"
+*/
+export function penTurnRight(angle: number): void {
+    _pen_angle = _pen_angle + angle
+}
+
+/**
+ * Pen turn left on ePaper at current position
+ */
+/*
+//% blockId=inkybit_pen_turn_left
+//% block="pen turn left %angle"
+*/
+export function penTurnLeft(angle: number): void {
+    _pen_angle = _pen_angle - angle
+}
+
+/**
+ * Pen jump on ePaper to a new position
+ */
+/*
+//% blockId=inkybit_pen_jump
+//% block="pen jump to %x and %y"
+*/
+export function penJump(x: number, y: number): void {
+    _pen_x = x
+    _pen_y = y
+}
+
+/**
+ * Pen get x on ePaper at current position
+ */
+/*
+//% blockId=inkybit_pen_get_x
+//% block="pen get x"
+*/
+export function penGetX(): number {
+    return _pen_x
+}
+
+/**
+ * Pen get y on ePaper at current position
+ */
+/*
+//% blockId=inkybit_pen_get_y
+//% block="pen get y"
+*/
+export function penGetY(): number {
+    return _pen_y
+}
+
+/**
+ * Pen set absolute angle on ePaper
+ */
+/*
+//% blockId=inkybit_pen_jump
+//% block="pen set absolute angle %angle"
+*/
+export function penAngle(angle: number): void {
+    _pen_angle = angle
+}
+
 function tokenize(text: string): string {
     let result: string = ""
     let icon: string = ""

@@ -150,57 +150,31 @@ namespace ePaper {
         //memset(buf, color, (COLS / 8) * ROWS);
         //memset(buf, color, (COLS / 8) * ROWS);
     }
-/* 
+
+    //%
     void setPixel(int y, int x, int color) {
-        if(x >= WIDTH) return;
-        if(y >= HEIGHT) return;
-        x = ROWS - 1 - x;
-        y += OFFSET_Y;
-        y = COLS - 1 - y;
-        uint8_t shift = 7 - (y % 8);
-        //uint8_t shift = (y % 8);
-        y /= 8;
-        uint16_t offset = (x * (COLS / 8)) + y;
+            if(y >= WIDTH) return;
+            if(x >= HEIGHT) return;
+            y += OFFSET_Y;
+            y = COLS - 1 - y;
+            uint8_t shift = 7 - (y % 8);
+            y /= 8;
+            uint16_t offset = (x * (COLS / 8)) + y;
 
-        uint8_t byte_b = buf[offset] | (0b1 << shift);
-        //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
-        //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
+            uint8_t byte_b = buf[offset] | (0b1 << shift);
+            //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
+            //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
 
-        //if(color == 2) {
-        //    byte_r |= 0b1 << shift;
-        //}
-        if(color == 1) {
-            byte_b &= ~(0b1 << shift);
-        }
+            //if(color == 2) {
+            //    byte_r |= 0b1 << shift;
+            //}
+            if(color == 1) {
+                byte_b &= ~(0b1 << shift);
+            }
 
-        buf[offset] = byte_b;
-        //buf_b[offset] = byte_b;
-        //buf_r[offset] = byte_r;
-    }
-*/
- void setPixel(int y, int x, int color) {
-        if(y >= WIDTH) return;
-        if(x >= HEIGHT) return;
-        y += OFFSET_Y;
-        y = COLS - 1 - y;
-        uint8_t shift = 7 - (y % 8);
-        y /= 8;
-        uint16_t offset = (x * (COLS / 8)) + y;
-
-        uint8_t byte_b = buf[offset] | (0b1 << shift);
-        //uint8_t byte_b = buf_b[offset] | (0b1 << shift);
-        //uint8_t byte_r = buf_r[offset] & ~(0b1 << shift);
-
-        //if(color == 2) {
-        //    byte_r |= 0b1 << shift;
-        //}
-        if(color == 1) {
-            byte_b &= ~(0b1 << shift);
-        }
-
-        buf[offset] = byte_b;
-        //buf_b[offset] = byte_b;
-        //buf_r[offset] = byte_r;
+            buf[offset] = byte_b;
+            //buf_b[offset] = byte_b;
+            //buf_r[offset] = byte_r;
     }
 
     
@@ -218,26 +192,6 @@ namespace ePaper {
         scale2x();
         spiDataEnd();
         //spiData(buf, (COLS / 8) * ROWS);
-/*
-        spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
-        spiCommand(WRITE_DUMMY, {0x1B});
-        spiCommand(WRITE_GATELINE, {0x0B});
-        spiCommand(DATA_MODE, {0x03});
-        spiCommand(SET_RAMXPOS, {0x00, COLS / 8 - 1});
-        spiCommand(SET_RAMYPOS, {0x00, 0x00, (ROWS - 1) & 0xFF, (ROWS - 1) >> 8});
-        spiCommand(WRITE_VCOM, {0x70});
-        spiCommand(WRITE_LUT, luts, sizeof(luts));
-        spiCommand(SET_RAMXCOUNT, {0x00});
-        spiCommand(SET_RAMYCOUNT, {0x00, 0x00});
-        
-        spiCommand(WRITE_RAM);
-        spiData(buf_b, (COLS / 8) * ROWS);
-        spiCommand(WRITE_ALTRAM);
-        spiData(buf_r, (COLS / 8) * ROWS);
-
-        busyWait();
-        spiCommand(MASTER_ACTIVATE);
-*/
     }
 
     //%

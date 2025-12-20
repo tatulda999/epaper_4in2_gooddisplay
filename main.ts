@@ -454,7 +454,7 @@ namespace ePaper {
     //% block="display your changes"
     export function show() {
         _show()
-        _update()
+       // _update()
     }
 
     /**
@@ -465,7 +465,7 @@ namespace ePaper {
     //% block="fast display your changes"
     export function show_fast() {
         _show()
-        _update_fast()
+        //_update_fast()
     }
 
     /**

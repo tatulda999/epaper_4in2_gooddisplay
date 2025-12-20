@@ -207,6 +207,7 @@ namespace ePaper {
     
     //%
     void update() {
+        show();
         spiCommand(0x22, {0xF7}); 
         spiCommand(0x20);
         busyWait(); 
@@ -214,6 +215,7 @@ namespace ePaper {
 
     //%
     void update_fast() {
+        show();
         spiCommand(0x22, {0xC7}); 
         spiCommand(0x20);
         busyWait(); 

@@ -372,7 +372,7 @@ namespace ePaper {
         }
         spiDataEnd();
         */
-        show();
+        //show();
         update();
         initialized = true;
     }

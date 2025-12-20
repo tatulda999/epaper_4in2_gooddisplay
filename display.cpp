@@ -206,6 +206,42 @@ namespace ePaper {
 
     
     //%
+    void show() {
+        spiCommand(WRITE_RAM);
+        //spiData(buf_b, (COLS / 8) * ROWS);
+        spiDataStart();
+        scale2x();
+        spiDataEnd();
+        //spiData(buf, (COLS / 8) * ROWS);
+        spiCommand(WRITE_ALTRAM);
+        //spiData(buf_r, (COLS / 8) * ROWS);
+        spiDataStart();
+        scale2x();
+        spiDataEnd();
+        //spiData(buf, (COLS / 8) * ROWS);
+/*
+        spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
+        spiCommand(WRITE_DUMMY, {0x1B});
+        spiCommand(WRITE_GATELINE, {0x0B});
+        spiCommand(DATA_MODE, {0x03});
+        spiCommand(SET_RAMXPOS, {0x00, COLS / 8 - 1});
+        spiCommand(SET_RAMYPOS, {0x00, 0x00, (ROWS - 1) & 0xFF, (ROWS - 1) >> 8});
+        spiCommand(WRITE_VCOM, {0x70});
+        spiCommand(WRITE_LUT, luts, sizeof(luts));
+        spiCommand(SET_RAMXCOUNT, {0x00});
+        spiCommand(SET_RAMYCOUNT, {0x00, 0x00});
+        
+        spiCommand(WRITE_RAM);
+        spiData(buf_b, (COLS / 8) * ROWS);
+        spiCommand(WRITE_ALTRAM);
+        spiData(buf_r, (COLS / 8) * ROWS);
+
+        busyWait();
+        spiCommand(MASTER_ACTIVATE);
+*/
+    }
+
+    //%
     void update() {
         show();
         spiCommand(0x22, {0xF7}); 
@@ -246,41 +282,6 @@ namespace ePaper {
         }
     }
 
-    //%
-    void show() {
-        spiCommand(WRITE_RAM);
-        //spiData(buf_b, (COLS / 8) * ROWS);
-        spiDataStart();
-        scale2x();
-        spiDataEnd();
-        //spiData(buf, (COLS / 8) * ROWS);
-        spiCommand(WRITE_ALTRAM);
-        //spiData(buf_r, (COLS / 8) * ROWS);
-        spiDataStart();
-        scale2x();
-        spiDataEnd();
-        //spiData(buf, (COLS / 8) * ROWS);
-/*
-        spiCommand(DRIVER_CONTROL, {ROWS - 1, (ROWS - 1) >> 8, 0x00});
-        spiCommand(WRITE_DUMMY, {0x1B});
-        spiCommand(WRITE_GATELINE, {0x0B});
-        spiCommand(DATA_MODE, {0x03});
-        spiCommand(SET_RAMXPOS, {0x00, COLS / 8 - 1});
-        spiCommand(SET_RAMYPOS, {0x00, 0x00, (ROWS - 1) & 0xFF, (ROWS - 1) >> 8});
-        spiCommand(WRITE_VCOM, {0x70});
-        spiCommand(WRITE_LUT, luts, sizeof(luts));
-        spiCommand(SET_RAMXCOUNT, {0x00});
-        spiCommand(SET_RAMYCOUNT, {0x00, 0x00});
-        
-        spiCommand(WRITE_RAM);
-        spiData(buf_b, (COLS / 8) * ROWS);
-        spiCommand(WRITE_ALTRAM);
-        spiData(buf_r, (COLS / 8) * ROWS);
-
-        busyWait();
-        spiCommand(MASTER_ACTIVATE);
-*/
-    }
 
     void reset() {
         //RESET.setDigitalValue(1);
@@ -418,7 +419,7 @@ namespace ePaper {
         }
         spiDataEnd();
         */
-        show();
+        //show();
         update();
         initialized = true;
     }

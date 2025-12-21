@@ -246,6 +246,9 @@ namespace ePaper {
 
     //%
     void fast_init() {
+        spi.format(8,0);
+        spi.frequency(1000000);
+
         reset();
 
         busyWait();

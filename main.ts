@@ -125,7 +125,7 @@ let _pixelSize: number = 1
 let _pen_x: number = 0
 let _pen_y: number = 0
 let _pen_angle: number = 0
-let _pen_color: number = 2
+let _pen_color: number = Color.Black + 1
 
 /**
  * Pen color on ePaper at current position
@@ -211,7 +211,7 @@ export function penTurnLeft(angle: number): void {
  */
 /*
 //% blockId=inkybit_pen_goto
-//% block="pen go to x %x and y %y"
+//% block="pen go to x %x| y %y"
 //% advanced
 */
 export function penGoto(x: number, y: number): void {
@@ -460,7 +460,7 @@ export function drawLine(x0: number, y0: number, x1: number, y1: number, color: 
 * @param color - color to set (0-1)
 */
 //% blockId=inkybit_draw_line_angle
-//% block="draw line from x %x y %y| with angle %angle| and length %length| color %color"
+//% block="draw line from x %x| y %y| with angle %angle| and length %length| color %color"
 //% x.min=0 x.max=199
 //% y.min=0 y.max=149
 //% angle.min=0 angle.max=360
@@ -758,7 +758,7 @@ function charWidth(character: string, size: TextSize = TextSize.Regular): number
  * and optional color + fill. 
  */
 //% blockId=inkybit_draw_ellipse
-//% block="draw ellipse with center at x %cx| y %cy| radii at x %rx| y %ry| rotation angle %angle| color %color| and filled %filled"
+//% block="draw ellipse with center at| x %cx| y %cy| radii at x %rx| y %ry| rotation angle %angle| color %color| and filled %filled"
 export function drawEllipse(
     cx: number,
     cy: number,

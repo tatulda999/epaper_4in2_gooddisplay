@@ -654,7 +654,7 @@ export function sleep() {
 //% blockId= ePaperWakeUp
 //% block="wake up"
 export function wake_up() {
-    _fast_init()
+    _slow_init()
 }
 
 //% shim=ePaper::show

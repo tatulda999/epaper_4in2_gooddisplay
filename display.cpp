@@ -200,6 +200,14 @@ namespace ePaper {
         }
     }
 
+    //%
+    void show_half() {
+        spiCommand(WRITE_RAM);
+        //spiData(buf_b, (COLS / 8) * ROWS);
+        spiDataStart();
+        scale2x();
+        spiDataEnd();
+    }
 
     //%
     void show() {

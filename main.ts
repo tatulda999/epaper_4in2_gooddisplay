@@ -612,7 +612,7 @@ export function show_fast() {
 //% blockId= inkybit_show_partial
 //% block="partial display changes"
 export function show_partial() {
-    _show()
+    _show_half()
     _update_partial()
 }
 
@@ -666,6 +666,11 @@ export function sleep() {
 //% block="wake up"
 export function wake_up() {
     _fast_init()
+}
+
+//% shim=ePaper::show_half
+function _show_half(): void {
+    return
 }
 
 //% shim=ePaper::show

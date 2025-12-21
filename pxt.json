@@ -1,5 +1,6 @@
 {
     "name": "epaper_4in2_gooddisplay - Copy - Copy - Copy",
+    "version": "0.0.1",
     "description": "",
     "dependencies": {
         "core": "*",

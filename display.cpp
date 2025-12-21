@@ -259,7 +259,8 @@ namespace ePaper {
         spiCommand(0x21, {0x40, 0x00});
         spiCommand(0x3C, {0x05});
         spiCommand(0x1A, {0x6E});
-        spiCommand(0x22, {0x91, 0x20});
+        spiCommand(0x22, {0x91});
+        spiCommand(0x20);
         busyWait();
 
         spiCommand(0x11, {0x01});

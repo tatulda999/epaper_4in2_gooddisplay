@@ -655,6 +655,8 @@ export function sleep() {
 //% block="wake up"
 export function wake_up() {
     _slow_init()
+    _sleep
+    _fast_init()
 }
 
 //% shim=ePaper::show

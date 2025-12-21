@@ -231,6 +231,13 @@ namespace ePaper {
         busyWait(); 
     }
 
+    //%
+    void update_partial() {
+        spiCommand(0x22, {0xFF}); 
+        spiCommand(0x20);
+        busyWait(); 
+    }
+
 
 
     void reset() {

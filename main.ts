@@ -606,6 +606,17 @@ export function show_fast() {
 }
 
 /**
+ * Update ePaper,
+ * update partial the e-ink display with your pretty pixels
+ */
+//% blockId= inkybit_show_partial
+//% block="partial display changes"
+export function show_partial() {
+    _show()
+    _update_partial()
+}
+
+/**
  * Clear ePaper,
  * clear the e-ink display for a blank canvas
  */
@@ -659,6 +670,11 @@ export function wake_up() {
 
 //% shim=ePaper::show
 function _show(): void {
+    return
+}
+
+//% shim=ePaper::update_partial
+function _update_partial(): void {
     return
 }
 

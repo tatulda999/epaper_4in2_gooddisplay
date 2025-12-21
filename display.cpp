@@ -376,6 +376,8 @@ namespace ePaper {
         */
         show();
         update();
+        sleep();
+        fast_init();
         initialized = true;
     }
 

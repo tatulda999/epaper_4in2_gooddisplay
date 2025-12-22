@@ -1,5 +1,4 @@
 #include "pxt.h"
-#include "MicroBit.h"
 #include <vector>
 using namespace pxt;
 

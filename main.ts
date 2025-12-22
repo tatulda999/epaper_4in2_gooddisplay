@@ -622,7 +622,7 @@ export function show_partial() {
  */
 //% blockId=inkybit_clear
 //% block="clear the display with color %color"
-export function clear(color: Color = Color.White) {
+export function clear_display(color: Color = Color.White) {
     if (color == Color.White) _clear(0xFF)
     else _clear(0x00)
 }

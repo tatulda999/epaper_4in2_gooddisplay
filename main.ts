@@ -600,7 +600,7 @@ export function show() {
  */
 //% blockId= inkybit_show_fast
 //% block="fast display changes"
-export function show_fast() {
+export function showFast() {
     _show()
     _update_fast()
 }
@@ -611,7 +611,7 @@ export function show_fast() {
  */
 //% blockId= inkybit_show_partial
 //% block="partial display changes"
-export function show_partial() {
+export function showPartial() {
     _show_half()
     _update_partial()
 }
@@ -622,7 +622,7 @@ export function show_partial() {
  */
 //% blockId=inkybit_clear
 //% block="clear the display with color %color"
-export function clear_display(color: Color = Color.White) {
+export function clearDisplay(color: Color = Color.White) {
     if (color == Color.White) _clear(0xFF)
     else _clear(0x00)
 }

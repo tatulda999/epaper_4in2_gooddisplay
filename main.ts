@@ -88,6 +88,10 @@ namespace ePaper {
         pins.digitalWritePin(PIN_RST, 1) // RESET
         basic.pause(100)
 
+        pins.digitalWritePin(20, 1) // SDA
+        basic.pause(10)
+        pins.digitalWritePin(19, 1) // SCL
+        basic.pause(10)
         // FT6336_SDA_H();
         // delay(10);
         // FT6336_SCL_H();

@@ -78,6 +78,9 @@ namespace ePaper {
      * Initialize the controller.
      * @param useInterrupt true: set G_MODE to trigger (INT pin will pulse); false: polling mode.
      */
+    //% blockId=inkybit_touch_init
+    //% block="init touch with interrupt %useInterrupt"
+    //% advanced
     export function initTouch(useInterrupt: boolean = true): void {
         // DEVICE_MODE = working (0) by default; set G_MODE per preference.
         setGMode(useInterrupt ? 0x01 : 0x00);
@@ -103,6 +106,9 @@ namespace ePaper {
     }
 
     /** Read firmware ID (for identification/debug). */
+    //% blockId=inkybit_touch_get_firmware_ID
+    //% block="touch get firmware ID"
+    //% advanced
     export function getFirmwareID(): number {
         return readReg(REG_FIRMWARE_ID, 1)[0];
     }
@@ -118,6 +124,9 @@ namespace ePaper {
     }
 
     /** Return true if at least one touch is detected (TD_STATUS > 0). */
+    //% blockId=inkybit_touch_touched
+    //% block="touched"
+    //% advanced
     export function touched(): boolean {
         const td = readReg(REG_TD_STATUS, 1)[0];
         const count = td & 0x0F; // low nibble: number of points

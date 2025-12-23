@@ -82,6 +82,17 @@ namespace ePaper {
     //% block="init touch with interrupt %useInterrupt"
     //% advanced
     export function initTouch(useInterrupt: boolean = true): void {
+        const PIN_RST: uint8 = 9
+        pins.digitalWritePin(PIN_RST, 0) // RESET
+        basic.pause(50)
+        pins.digitalWritePin(PIN_RST, 1) // RESET
+        basic.pause(100)
+
+        // FT6336_SDA_H();
+        // delay(10);
+        // FT6336_SCL_H();
+        // delay(10);
+        // temp = 0;
         // DEVICE_MODE = working (0) by default; set G_MODE per preference.
         setGMode(useInterrupt ? 0x01 : 0x00);
         // Optional: set a sensible threshold and active period (values are device/TP dependent).

@@ -60,17 +60,31 @@ namespace ePaper {
 
     // ---- Low-level I2C helpers ----
     function writeReg8(reg: number, val: number): void {
-        const buf = pins.createBuffer(2);
+        let buf = pins.createBuffer(2);
         buf[0] = reg & 0xFF;
         buf[1] = val & 0xFF;
         pins.i2cWriteBuffer(I2C_ADDR, buf, false);
     }
+    // function setRegister(register: number, value: number) {
+    //     let data = pins.createBuffer(2)
+    //     data[0] = register
+    //     data[1] = value
+    //     pins.i2cWriteBuffer(DS3231_I2C_ADDR, data)
+    // }
 
-    function readReg(reg: number, len: number): Buffer {
-        // Write register address then read, with repeated start
-        pins.i2cWriteNumber(I2C_ADDR, reg & 0xFF, NumberFormat.UInt8LE, true);
-        return pins.i2cReadBuffer(I2C_ADDR, len, false);
+    function readReg(register: number, len: number): Buffer {
+        let data = pins.createBuffer(1)
+        data[0] = register
+        pins.i2cWriteBuffer(I2C_ADDR, data)
+        return pins.i2cReadBuffer(I2C_ADDR, len, false)
+        //return pins.i2cReadNumber(I2C_ADDR, NumberFormat.UInt8LE)
     }
+
+    // function readReg(reg: number, len: number): Buffer {
+    //     // Write register address then read, with repeated start
+    //     pins.i2cWriteNumber(I2C_ADDR, reg & 0xFF, NumberFormat.UInt8LE, true);
+    //     return pins.i2cReadBuffer(I2C_ADDR, len, false);
+    // }
 
     // ---- Public API ----
 

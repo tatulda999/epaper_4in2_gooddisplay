@@ -129,6 +129,9 @@ namespace ePaper {
     }
 
     /** Read chip ID (FT6336 usually reports 0x36). */
+    //% blockId=inkybit_touch_get_chip_ID
+    //% block="touch get chip ID"
+    //% advanced
     export function getChipID(): number {
         return readReg(REG_CHIP_ID, 1)[0];
     }

@@ -99,6 +99,7 @@ namespace ePaper {
         const PIN_RST: uint8 = 9
         const PIN_INT: uint8 = 10
         pins.digitalReadPin(PIN_INT) // INT
+        pins.setPull(PIN_INT,PinPullMode.PullUp)
         pins.digitalWritePin(PIN_RST, 0) // RESET
         basic.pause(50)
         pins.digitalWritePin(PIN_RST, 1) // RESET

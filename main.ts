@@ -901,7 +901,7 @@ export function clearDisplay(color: Color = Color.White) {
 //     }
 // }
 
-export function init(upside_down:number = 1) {
+export function init(upside_down:boolean = false) {
     _init(upside_down)
 }
 
@@ -957,7 +957,7 @@ function _setPixel(x: number, y: number, color: number): void {
 }
 
 //% shim=ePaper::init
-function _init(upside_down:number): void {
+function _init(upside_down:boolean): void {
     return
 }
 
@@ -1254,7 +1254,7 @@ function fillPolygonEvenOdd(
 
 
 //pins.spiFrequency(1000000)
-ePaper.init(0)
+ePaper.init(false)
 
 /*
 pins.digitalWritePin(12,0) // DC

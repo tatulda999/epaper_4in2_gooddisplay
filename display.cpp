@@ -157,7 +157,7 @@ namespace ePaper {
             if(y >= WIDTH) return;
             if(x >= HEIGHT) return;
             if (!upside_down) {
-                x = HIGHT - x;
+                x = HEIGHT - x;
                 y = WIDTH - y;
             } 
             y += OFFSET_Y;
@@ -318,10 +318,10 @@ namespace ePaper {
     }
 
     //%
-    void init(uint8_t _upside_down) {
+    void init(bool _upside_down) {
         if(initialized) return;
 
-        upside_down = (_upside_down == 1);
+        upside_down = _upside_down;
         
         // Initialize translation arrays:
         g_expand_hi = (uint8_t *)malloc(256);

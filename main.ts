@@ -8,243 +8,243 @@ namespace ePaper {
 
 
 
-    // 7-bit I2C address (fixed for FT6x36 family)
-    const I2C_ADDR = 0x38;
+    // // 7-bit I2C address (fixed for FT6x36 family)
+    // const I2C_ADDR = 0x38;
 
-    // ---- Register addresses (subset commonly used) ----
-    // Working/gesture/status
-    const REG_DEVICE_MODE = 0x00;
-    const REG_GEST_ID = 0x01;
-    const REG_TD_STATUS = 0x02;
+    // // ---- Register addresses (subset commonly used) ----
+    // // Working/gesture/status
+    // const REG_DEVICE_MODE = 0x00;
+    // const REG_GEST_ID = 0x01;
+    // const REG_TD_STATUS = 0x02;
 
-    // Touch #1 block
-    const REG_TOUCH1_XH = 0x03; // [7:6]=event, [3:0]=X high
-    const REG_TOUCH1_XL = 0x04; // X low
-    const REG_TOUCH1_YH = 0x05; // [7:4]=ID, [3:0]=Y high
-    const REG_TOUCH1_YL = 0x06; // Y low
-    const REG_TOUCH1_WEIGHT = 0x07;
-    const REG_TOUCH1_MISC = 0x08;
+    // // Touch #1 block
+    // const REG_TOUCH1_XH = 0x03; // [7:6]=event, [3:0]=X high
+    // const REG_TOUCH1_XL = 0x04; // X low
+    // const REG_TOUCH1_YH = 0x05; // [7:4]=ID, [3:0]=Y high
+    // const REG_TOUCH1_YL = 0x06; // Y low
+    // const REG_TOUCH1_WEIGHT = 0x07;
+    // const REG_TOUCH1_MISC = 0x08;
 
-    // Touch #2 block
-    const REG_TOUCH2_XH = 0x09;
-    const REG_TOUCH2_XL = 0x0A;
-    const REG_TOUCH2_YH = 0x0B;
-    const REG_TOUCH2_YL = 0x0C;
-    const REG_TOUCH2_WEIGHT = 0x0D;
-    const REG_TOUCH2_MISC = 0x0E;
+    // // Touch #2 block
+    // const REG_TOUCH2_XH = 0x09;
+    // const REG_TOUCH2_XL = 0x0A;
+    // const REG_TOUCH2_YH = 0x0B;
+    // const REG_TOUCH2_YL = 0x0C;
+    // const REG_TOUCH2_WEIGHT = 0x0D;
+    // const REG_TOUCH2_MISC = 0x0E;
 
-    // Config/ID
-    const REG_THRESHOLD = 0x80;
-    const REG_ACTIVE_MODE_RATE = 0x88; // report period in Active mode
-    const REG_G_MODE = 0xA4; // 0=polling, 1=trigger (INT)
-    const REG_POWER_MODE = 0xA5;
-    const REG_FIRMWARE_ID = 0xA6;
-    const REG_CHIP_ID = 0xA3;
+    // // Config/ID
+    // const REG_THRESHOLD = 0x80;
+    // const REG_ACTIVE_MODE_RATE = 0x88; // report period in Active mode
+    // const REG_G_MODE = 0xA4; // 0=polling, 1=trigger (INT)
+    // const REG_POWER_MODE = 0xA5;
+    // const REG_FIRMWARE_ID = 0xA6;
+    // const REG_CHIP_ID = 0xA3;
 
-    // ---- Types ----
-    export interface TouchPoint {
-        x: number;          // 0..65535 (FT reports 12-bit typical)
-        y: number;          // 0..65535
-        event: number;      // raw event code bits [7:6] from XH
-        id: number;         // raw ID bits [7:4] from YH
-        weight: number;     // touch weight/pressure (device-specific)
-        misc: number;       // area/radian etc. (device-specific)
-    }
+    // // ---- Types ----
+    // export interface TouchPoint {
+    //     x: number;          // 0..65535 (FT reports 12-bit typical)
+    //     y: number;          // 0..65535
+    //     event: number;      // raw event code bits [7:6] from XH
+    //     id: number;         // raw ID bits [7:4] from YH
+    //     weight: number;     // touch weight/pressure (device-specific)
+    //     misc: number;       // area/radian etc. (device-specific)
+    // }
 
-    export interface TouchReport {
-        points: number;     // 0..2
-        p1?: TouchPoint;
-        p2?: TouchPoint;
-        gesture?: number;   // GEST_ID (raw)
-    }
+    // export interface TouchReport {
+    //     points: number;     // 0..2
+    //     p1?: TouchPoint;
+    //     p2?: TouchPoint;
+    //     gesture?: number;   // GEST_ID (raw)
+    // }
 
-    // ---- Low-level I2C helpers ----
-    function writeReg8(reg: number, val: number): void {
-        let buf = pins.createBuffer(2);
-        buf[0] = reg & 0xFF;
-        buf[1] = val & 0xFF;
-        pins.i2cWriteBuffer(I2C_ADDR, buf, false);
-    }
-    // function setRegister(register: number, value: number) {
-    //     let data = pins.createBuffer(2)
+    // // ---- Low-level I2C helpers ----
+    // function writeReg8(reg: number, val: number): void {
+    //     let buf = pins.createBuffer(2);
+    //     buf[0] = reg & 0xFF;
+    //     buf[1] = val & 0xFF;
+    //     pins.i2cWriteBuffer(I2C_ADDR, buf, false);
+    // }
+    // // function setRegister(register: number, value: number) {
+    // //     let data = pins.createBuffer(2)
+    // //     data[0] = register
+    // //     data[1] = value
+    // //     pins.i2cWriteBuffer(DS3231_I2C_ADDR, data)
+    // // }
+
+    // function readReg(register: number, len: number): Buffer {
+    //     let data = pins.createBuffer(1)
     //     data[0] = register
-    //     data[1] = value
-    //     pins.i2cWriteBuffer(DS3231_I2C_ADDR, data)
+    //     pins.i2cWriteBuffer(I2C_ADDR, data)
+    //     return pins.i2cReadBuffer(I2C_ADDR, len, false)
+    //     //return pins.i2cReadNumber(I2C_ADDR, NumberFormat.UInt8LE)
     // }
 
-    function readReg(register: number, len: number): Buffer {
-        let data = pins.createBuffer(1)
-        data[0] = register
-        pins.i2cWriteBuffer(I2C_ADDR, data)
-        return pins.i2cReadBuffer(I2C_ADDR, len, false)
-        //return pins.i2cReadNumber(I2C_ADDR, NumberFormat.UInt8LE)
-    }
+    // // function readReg(reg: number, len: number): Buffer {
+    // //     // Write register address then read, with repeated start
+    // //     pins.i2cWriteNumber(I2C_ADDR, reg & 0xFF, NumberFormat.UInt8LE, true);
+    // //     return pins.i2cReadBuffer(I2C_ADDR, len, false);
+    // // }
 
-    // function readReg(reg: number, len: number): Buffer {
-    //     // Write register address then read, with repeated start
-    //     pins.i2cWriteNumber(I2C_ADDR, reg & 0xFF, NumberFormat.UInt8LE, true);
-    //     return pins.i2cReadBuffer(I2C_ADDR, len, false);
+    // // ---- Public API ----
+
+    // /**
+    //  * Initialize the controller.
+    //  * @param useInterrupt true: set G_MODE to trigger (INT pin will pulse); false: polling mode.
+    //  */
+    // //% blockId=inkybit_touch_init
+    // //% block="init touch with interrupt %useInterrupt"
+    // //% advanced
+    // export function initTouch(useInterrupt: boolean = true): void {
+    //     const PIN_RST: uint8 = 9
+    //     const PIN_INT: uint8 = 10
+    //     pins.digitalReadPin(PIN_INT) // INT
+    //     pins.setPull(PIN_INT,PinPullMode.PullUp)
+    //     pins.digitalWritePin(PIN_RST, 0) // RESET
+    //     basic.pause(50)
+    //     pins.digitalWritePin(PIN_RST, 1) // RESET
+    //     basic.pause(100)
+
+    //     pins.digitalWritePin(20, 1) // SDA
+    //     basic.pause(10)
+    //     pins.digitalWritePin(19, 1) // SCL
+    //     basic.pause(10)
+    //     // FT6336_SDA_H();
+    //     // delay(10);
+    //     // FT6336_SCL_H();
+    //     // delay(10);
+    //     // temp = 0;
+    //     // DEVICE_MODE = working (0) by default; set G_MODE per preference.
+    //     setGMode(useInterrupt ? 0x01 : 0x00);
+    //     // Optional: set a sensible threshold and active period (values are device/TP dependent).
+    //     // Keep defaults unless you know your panel characteristics.
+    //     // setThreshold(0x20);        // example: medium sensitivity
+    //     // setActiveReportPeriod(0x0A); // example: ~10 (device interprets internally)
     // }
 
-    // ---- Public API ----
+    // /** Set interrupt mode (0: polling, 1: trigger). */
+    // export function setGMode(mode: number): void {
+    //     writeReg8(REG_G_MODE, mode & 0x01);
+    // }
 
-    /**
-     * Initialize the controller.
-     * @param useInterrupt true: set G_MODE to trigger (INT pin will pulse); false: polling mode.
-     */
-    //% blockId=inkybit_touch_init
-    //% block="init touch with interrupt %useInterrupt"
-    //% advanced
-    export function initTouch(useInterrupt: boolean = true): void {
-        const PIN_RST: uint8 = 9
-        const PIN_INT: uint8 = 10
-        pins.digitalReadPin(PIN_INT) // INT
-        pins.setPull(PIN_INT,PinPullMode.PullUp)
-        pins.digitalWritePin(PIN_RST, 0) // RESET
-        basic.pause(50)
-        pins.digitalWritePin(PIN_RST, 1) // RESET
-        basic.pause(100)
+    // /** Get current G_MODE. */
+    // export function getGMode(): number {
+    //     return readReg(REG_G_MODE, 1)[0] & 0x01;
+    // }
 
-        pins.digitalWritePin(20, 1) // SDA
-        basic.pause(10)
-        pins.digitalWritePin(19, 1) // SCL
-        basic.pause(10)
-        // FT6336_SDA_H();
-        // delay(10);
-        // FT6336_SCL_H();
-        // delay(10);
-        // temp = 0;
-        // DEVICE_MODE = working (0) by default; set G_MODE per preference.
-        setGMode(useInterrupt ? 0x01 : 0x00);
-        // Optional: set a sensible threshold and active period (values are device/TP dependent).
-        // Keep defaults unless you know your panel characteristics.
-        // setThreshold(0x20);        // example: medium sensitivity
-        // setActiveReportPeriod(0x0A); // example: ~10 (device interprets internally)
-    }
+    // /** Set reporting period while active (datasheet-defined units). */
+    // export function setActiveReportPeriod(v: number): void {
+    //     writeReg8(REG_ACTIVE_MODE_RATE, v & 0xFF);
+    // }
 
-    /** Set interrupt mode (0: polling, 1: trigger). */
-    export function setGMode(mode: number): void {
-        writeReg8(REG_G_MODE, mode & 0x01);
-    }
+    // /** Read firmware ID (for identification/debug). */
+    // //% blockId=inkybit_touch_get_firmware_ID
+    // //% block="touch get firmware ID"
+    // //% advanced
+    // export function getFirmwareID(): number {
+    //     return readReg(REG_FIRMWARE_ID, 1)[0];
+    // }
 
-    /** Get current G_MODE. */
-    export function getGMode(): number {
-        return readReg(REG_G_MODE, 1)[0] & 0x01;
-    }
+    // /** Read chip ID (FT6336 usually reports 0x36). */
+    // //% blockId=inkybit_touch_get_chip_ID
+    // //% block="touch get chip ID"
+    // //% advanced
+    // export function getChipID(): number {
+    //     return readReg(REG_CHIP_ID, 1)[0];
+    // }
 
-    /** Set reporting period while active (datasheet-defined units). */
-    export function setActiveReportPeriod(v: number): void {
-        writeReg8(REG_ACTIVE_MODE_RATE, v & 0xFF);
-    }
+    // /** Set touch threshold (higher = less sensitive). */
+    // export function setThreshold(v: number): void {
+    //     writeReg8(REG_THRESHOLD, v & 0xFF);
+    // }
 
-    /** Read firmware ID (for identification/debug). */
-    //% blockId=inkybit_touch_get_firmware_ID
-    //% block="touch get firmware ID"
-    //% advanced
-    export function getFirmwareID(): number {
-        return readReg(REG_FIRMWARE_ID, 1)[0];
-    }
+    // /** Return true if at least one touch is detected (TD_STATUS > 0). */
+    // //% blockId=inkybit_touch_touched
+    // //% block="touched"
+    // //% advanced
+    // export function touched(): boolean {
+    //     const td = readReg(REG_TD_STATUS, 1)[0];
+    //     const count = td & 0x0F; // low nibble: number of points
+    //     return count > 0;
+    // }
 
-    /** Read chip ID (FT6336 usually reports 0x36). */
-    //% blockId=inkybit_touch_get_chip_ID
-    //% block="touch get chip ID"
-    //% advanced
-    export function getChipID(): number {
-        return readReg(REG_CHIP_ID, 1)[0];
-    }
+    // /**
+    //  * Read current touch points and gesture in one call.
+    //  * Returns a TouchReport (points: 0..2).
+    //  */
+    // export function read(): TouchReport {
+    //     // Read from GEST_ID(0x01) through TOUCH2_MISC(0x0E) in a single burst.
+    //     const buf2 = readReg(REG_GEST_ID, 1 + 1 + 6 + 6); // 1(GEST) + 1(TD_STATUS) + 6(tp1) + 6(tp2) = 14 bytes
 
-    /** Set touch threshold (higher = less sensitive). */
-    export function setThreshold(v: number): void {
-        writeReg8(REG_THRESHOLD, v & 0xFF);
-    }
+    //     const gest = buf2[0];
+    //     const tdStatus = buf2[1];
+    //     const count2 = tdStatus & 0x0F;
 
-    /** Return true if at least one touch is detected (TD_STATUS > 0). */
-    //% blockId=inkybit_touch_touched
-    //% block="touched"
-    //% advanced
-    export function touched(): boolean {
-        const td = readReg(REG_TD_STATUS, 1)[0];
-        const count = td & 0x0F; // low nibble: number of points
-        return count > 0;
-    }
+    //     const rpt: TouchReport = { points: count2, gesture: gest };
 
-    /**
-     * Read current touch points and gesture in one call.
-     * Returns a TouchReport (points: 0..2).
-     */
-    export function read(): TouchReport {
-        // Read from GEST_ID(0x01) through TOUCH2_MISC(0x0E) in a single burst.
-        const buf2 = readReg(REG_GEST_ID, 1 + 1 + 6 + 6); // 1(GEST) + 1(TD_STATUS) + 6(tp1) + 6(tp2) = 14 bytes
+    //     if (count2 >= 1) {
+    //         const xh = buf2[2];
+    //         const xl = buf2[3];
+    //         const yh = buf2[4];
+    //         const yl = buf2[5];
+    //         const wt = buf2[6];
+    //         const ms = buf2[7];
 
-        const gest = buf2[0];
-        const tdStatus = buf2[1];
-        const count2 = tdStatus & 0x0F;
+    //         const p1: TouchPoint = {
+    //             x: ((xh & 0x0F) << 8) | xl,
+    //             y: ((yh & 0x0F) << 8) | yl,
+    //             event: (xh >> 6) & 0x03,   // event flag
+    //             id: (yh >> 4) & 0x0F,      // touch ID
+    //             weight: wt,
+    //             misc: ms
+    //         };
+    //         rpt.p1 = p1;
+    //     }
 
-        const rpt: TouchReport = { points: count2, gesture: gest };
+    //     if (count2 >= 2) {
+    //         const xh2 = buf2[8];
+    //         const xl2 = buf2[9];
+    //         const yh2 = buf2[10];
+    //         const yl2 = buf2[11];
+    //         const wt2 = buf2[12];
+    //         const ms2 = buf2[13];
 
-        if (count2 >= 1) {
-            const xh = buf2[2];
-            const xl = buf2[3];
-            const yh = buf2[4];
-            const yl = buf2[5];
-            const wt = buf2[6];
-            const ms = buf2[7];
+    //         const p2: TouchPoint = {
+    //             x: ((xh2 & 0x0F) << 8) | xl2,
+    //             y: ((yh2 & 0x0F) << 8) | yl2,
+    //             event: (xh2 >> 6) & 0x03,
+    //             id: (yh2 >> 4) & 0x0F,
+    //             weight: wt2,
+    //             misc: ms2
+    //         };
+    //         rpt.p2 = p2;
+    //     }
 
-            const p1: TouchPoint = {
-                x: ((xh & 0x0F) << 8) | xl,
-                y: ((yh & 0x0F) << 8) | yl,
-                event: (xh >> 6) & 0x03,   // event flag
-                id: (yh >> 4) & 0x0F,      // touch ID
-                weight: wt,
-                misc: ms
-            };
-            rpt.p1 = p1;
-        }
+    //     return rpt;
+    // }
 
-        if (count2 >= 2) {
-            const xh2 = buf2[8];
-            const xl2 = buf2[9];
-            const yh2 = buf2[10];
-            const yl2 = buf2[11];
-            const wt2 = buf2[12];
-            const ms2 = buf2[13];
+    // /**
+    //  * Optional helper: map panel coordinates to a given logical width/height with rotation (0/90/180/270).
+    //  */
+    // export function mapCoords(pt: TouchPoint, panelW: number, panelH: number, rotation: 0 | 90 | 180 | 270 = 0): TouchPoint {
+    //     let x = pt.x, y = pt.y;
+    //     switch (rotation) {
+    //         case 90: [x, y] = [pt.y, panelW - 1 - pt.x]; break;
+    //         case 180: [x, y] = [panelW - 1 - pt.x, panelH - 1 - pt.y]; break;
+    //         case 270: [x, y] = [panelH - 1 - pt.y, pt.x]; break;
+    //         default: [x, y] = [pt.x, pt.y];
+    //     }
 
-            const p2: TouchPoint = {
-                x: ((xh2 & 0x0F) << 8) | xl2,
-                y: ((yh2 & 0x0F) << 8) | yl2,
-                event: (xh2 >> 6) & 0x03,
-                id: (yh2 >> 4) & 0x0F,
-                weight: wt2,
-                misc: ms2
-            };
-            rpt.p2 = p2;
-        }
+    //     return {
+    //         x: x,
+    //         y: y,
+    //         event: pt.event,
+    //         id: pt.id,
+    //         weight: pt.weight,
+    //         misc: pt.misc
+    //     };
 
-        return rpt;
-    }
-
-    /**
-     * Optional helper: map panel coordinates to a given logical width/height with rotation (0/90/180/270).
-     */
-    export function mapCoords(pt: TouchPoint, panelW: number, panelH: number, rotation: 0 | 90 | 180 | 270 = 0): TouchPoint {
-        let x = pt.x, y = pt.y;
-        switch (rotation) {
-            case 90: [x, y] = [pt.y, panelW - 1 - pt.x]; break;
-            case 180: [x, y] = [panelW - 1 - pt.x, panelH - 1 - pt.y]; break;
-            case 270: [x, y] = [panelH - 1 - pt.y, pt.x]; break;
-            default: [x, y] = [pt.x, pt.y];
-        }
-
-        return {
-            x: x,
-            y: y,
-            event: pt.event,
-            id: pt.id,
-            weight: pt.weight,
-            misc: pt.misc
-        };
-
-    }
+    // }
 
 
 

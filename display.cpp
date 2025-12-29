@@ -318,10 +318,10 @@ namespace ePaper {
     }
 
     //%
-    void init(bool _upside_down) {
+    void init(uint8_t _upside_down) {
         if(initialized) return;
 
-        upside_down = _upside_down;
+        upside_down = (_upside_down == 1);
         
         // Initialize translation arrays:
         g_expand_hi = (uint8_t *)malloc(256);

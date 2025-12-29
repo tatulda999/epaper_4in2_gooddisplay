@@ -280,7 +280,7 @@ namespace ePaper {
 const WIDTH: number = 200
 const HEIGHT: number = 150
 
-let UPSIDE_DOWN: boolean = false
+//let UPSIDE_DOWN: boolean = false
 
 const ARROWOFFSET: number = 40
 
@@ -901,8 +901,8 @@ export function clearDisplay(color: Color = Color.White) {
 //     }
 // }
 
-export function init() {
-    _init()
+export function init(upside_down:boolean = true) {
+    _init(upside_down)
 }
 
 export function fast_init() {
@@ -957,7 +957,7 @@ function _setPixel(x: number, y: number, color: number): void {
 }
 
 //% shim=ePaper::init
-function _init(): void {
+function _init(upside_down:boolean): void {
     return
 }
 
@@ -1254,7 +1254,7 @@ function fillPolygonEvenOdd(
 
 
 //pins.spiFrequency(1000000)
-ePaper.init(UPSIDE_DOWN)
+ePaper.init(false)
 
 /*
 pins.digitalWritePin(12,0) // DC

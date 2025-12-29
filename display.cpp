@@ -157,7 +157,7 @@ namespace ePaper {
             if(y >= WIDTH) return;
             if(x >= HEIGHT) return;
             if (!upside_down) {
-                x = HIGHT - x
+                x = HIGHT - x;
                 y = WIDTH - y;
             } 
             y += OFFSET_Y;

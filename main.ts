@@ -1254,7 +1254,7 @@ function fillPolygonEvenOdd(
 
 
 //pins.spiFrequency(1000000)
-ePaper.init()
+ePaper.init(UPSIDE_DOWN)
 
 /*
 pins.digitalWritePin(12,0) // DC

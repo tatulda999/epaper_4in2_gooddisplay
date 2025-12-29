@@ -75,6 +75,7 @@ SPI spi(MOSI, MISO, SCK);
 
 bool initialized = false;
 
+bool upside_down = false;
 
 namespace ePaper {
 
@@ -155,6 +156,10 @@ namespace ePaper {
     void setPixel(int y, int x, int color) {
             if(y >= WIDTH) return;
             if(x >= HEIGHT) return;
+            if (!upside_down) {
+                x = HIGHT - x
+                y = WIDTH - y;
+            } 
             y += OFFSET_Y;
             y = COLS - 1 - y;
             uint8_t shift = 7 - (y % 8);
@@ -313,8 +318,10 @@ namespace ePaper {
     }
 
     //%
-    void init() {
+    void init(bool _upside_down) {
         if(initialized) return;
+
+        upside_down = _upside_down;
         
         // Initialize translation arrays:
         g_expand_hi = (uint8_t *)malloc(256);
